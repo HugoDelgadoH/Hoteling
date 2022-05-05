@@ -8,13 +8,11 @@
 
     <body>
 
-        <ui:composition template="./../../WEB-INF/templateCliente.xhtml">
+        <ui:composition template="./../WEB-INF/templateCliente.xhtml">
 
             <ui:define name="content">
-
-                <h1>Hola</h1>
                 <h:form>
-                <!-- <div class="card">
+                 <div class="card">
                      <h:form>
                          <p:panel id="panel" header="Buscar ciudad" styleClass="p-mb-3">
                              <p:growl id="messages"/>
@@ -35,8 +33,8 @@
                          <p:commandButton process="@parent:@parent" update="@form" value="Process: @parent:parent (Form)" styleClass="p-mr-2" />
  
                      </h:form>
-                 </div>-->
-                <!-- <div>
+                 </div>
+                 <div>
                      <h2>Selecciona un hotel</h2>
                      <h:form>
                          <h:selectOneRadio value="#{reserva.hotelId}"
@@ -49,7 +47,7 @@
                          </h:selectOneRadio>
                          <p:commandButton id="next" value="Next" action="selectHora"/>
                      </h:form>
-                 </div>-->
+                 </div>
                     <p:commandButton id="next" value="Next" action="selectHora"/>
                 </h:form>
             </ui:define>
