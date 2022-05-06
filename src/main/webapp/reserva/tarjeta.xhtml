@@ -7,13 +7,29 @@
 
     <body>
 
-        <ui:composition template="./../../WEB-INF/templateCliente.xhtml">
+        <ui:composition template="./../WEB-INF/templateCliente.xhtml">
 
             <ui:define name="content">
-                <h:form>  
-                    <p:commandButton id="next" value="Next" action="resumen"/>
+                <h:form prependId="false">
+                    <p:panel id="panel" header="Introduzca informacion del pago" styleClass="p-mb-3">
+
+                        <h:panelGrid columns="2" id="panelPrecio" cellpadding="7"> 
+                            <p:outputLabel for="precio" value="Precio"/> 
+                            <p:outputLabel id='precio' value="50€"/>               
+                        </h:panelGrid>
+                        <h:panelGrid columns="3" id="gridTarjeta"> 
+                            <p:outputLabel for="tarjeta" value="Tarjeta de credito"/>
+                            <p:inputMask id="tarjeta" value="#{reserva.tarjeta}" mask="9999-9999-9999-9999" required="true"/>
+                            <p:message for="tarjeta"/>
+                            <p:outputLabel for="fecha" value="Fecha de expiracion (mes/año)"/>
+                            <p:datePicker id="fecha" view="month" value="#{reserva.fechaTarjeta}" pattern="MM/yyyy" locale="es" yearNavigator="true" yearRange="2022:2030" />
+                            <p:message for="fecha"/>
+                        </h:panelGrid>
+
+                    </p:panel> 
                     <p:commandButton id="back" value="Back" action="selectHora"/>
-                </h:form>  
+                    <p:commandButton id="next" value="Next" action="resumen"/>
+                </h:form>
             </ui:define>
 
         </ui:composition>

@@ -70,7 +70,7 @@ public class HotelFacadeREST extends AbstractFacade<Hotel> {
     public List<Hotel> findAll() {
         return super.findAll();
     }
-
+ 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})

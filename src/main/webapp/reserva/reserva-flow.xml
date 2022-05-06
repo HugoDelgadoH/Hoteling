@@ -11,7 +11,7 @@ and open the template in the editor.
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
     <flow-definition id="reserva">
         <flow-return id="home">
-            <from-outcome>/index</from-outcome>
+            <from-outcome>/cliente/index</from-outcome>
         </flow-return>
     </flow-definition>
 </faces-config>

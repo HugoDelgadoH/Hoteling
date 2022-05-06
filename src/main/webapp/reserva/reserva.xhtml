@@ -11,7 +11,6 @@
         <ui:composition template="./../WEB-INF/templateCliente.xhtml">
 
             <ui:define name="content">
-                <h:form>
                  <div class="card">
                      <h:form>
                          <p:panel id="panel" header="Buscar ciudad" styleClass="p-mb-3">
@@ -21,35 +20,35 @@
                                  <h:outputLabel for="ciudad" value="Ciudad: "/>
                                  <p:selectOneMenu id="ciudad" value="#{reserva.ciudad}" required="true" label="Ciudad" style="width: 12rem">
                                      <f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true"/>
-                                     <f:selectItem itemLabel="Option 1" itemValue="segovia"/>
-                                     <f:selectItem itemLabel="Option 2" itemValue="mad"/>
-                                     <f:selectItem itemLabel="Option 3" itemValue="3"/>
+                                     <f:selectItem itemLabel="Todos" itemValue="Todos"/>
+                                     <f:selectItems value="#{reserva.ciudadesDistinct}"
+                                                    var="h"
+                                                    itemValue="#{h}"
+                                                    itemLabel="#{h}"/>
                                  </p:selectOneMenu>
                                  <p:message for="ciudad"/>
                                  <h:outputText value="#{reserva.ciudad}"/>
                              </h:panelGrid>
                          </p:panel>
  
-                         <p:commandButton process="@parent:@parent" update="@form" value="Process: @parent:parent (Form)" styleClass="p-mr-2" />
+                         <p:commandButton process="@parent:@parent" update="results,@form" value="Buscar" styleClass="p-mr-2" />
  
                      </h:form>
                  </div>
-                 <div>
+                 <p:outputPanel layout="block" id="results">
                      <h2>Selecciona un hotel</h2>
-                     <h:form>
+                     <h:form><!-- como establezco reserva.ciudad para el hotel elegido en este form? -->
                          <h:selectOneRadio value="#{reserva.hotelId}"
                                            layout="pageDirection"
                                            required="true">
-                             <f:selectItems value="#{hotelFacadeREST.findAll()}"
+                             <f:selectItems value="#{reserva.hotelesByCiudad}"
                                             var="m"
                                             itemValue="#{m.id}"
-                                            itemLabel="#{m.nombre}"/>
+                                            itemLabel="#{m.nombre}, #{m.ciudad}"/>
                          </h:selectOneRadio>
                          <p:commandButton id="next" value="Next" action="selectHora"/>
                      </h:form>
-                 </div>
-                    <p:commandButton id="next" value="Next" action="selectHora"/>
-                </h:form>
+                 </p:outputPanel>
             </ui:define>
 
         </ui:composition>

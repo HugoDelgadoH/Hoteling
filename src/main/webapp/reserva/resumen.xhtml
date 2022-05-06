@@ -3,17 +3,41 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
-        <ui:composition template="./../../WEB-INF/templateCliente.xhtml">
+        <ui:composition template="./../WEB-INF/templateCliente.xhtml">
 
             <ui:define name="content">
                 <h:form>  
-                    
+                    <p:panelGrid id="print" columns ="1">
+                        <p:panelGrid id="info" columns="4">
+                            <h:outputText value="Hotel: #{reserva.hotel}"/>
+                            <h:outputText value="Ciudad: #{reserva.ciudad}"/>
+                            <h:outputText value="Llegada: #{reserva.fechaInicio}">
+                                <f:convertDateTime pattern="dd/mm/yyyy"/>
+                            </h:outputText>
+                            <h:outputText value="Salida: #{reserva.fechaFin}">
+                                <f:convertDateTime pattern="dd/mm/yyyy" />
+                            </h:outputText>
+                        </p:panelGrid>
+                        <p:panelGrid id="datosTarjeta" columns="2">
+                            <h:outputText value="Precio:"/>
+                            <h:outputText value="50€"/>
+                            <!--<f:convertNumber currencySymbol = "€" type="currency"/>
+                        </h:outputText>-->
+                            <h:outputText value="Tarjeta de credito:"/>
+                            <h:outputText value="#{reserva.tarjeta}"/>
+                            <h:outputText value="Fecha de expiracion:"/>
+                            <h:outputText value="#{reserva.fechaTarjeta}">
+                                <f:convertDateTime pattern="MM/yyyy" timeZone="GMT+2"/>
+                            </h:outputText>
+                        </p:panelGrid>
+                    </p:panelGrid>
                     <p:commandButton id="back" value="Back" action="tarjeta"/>
-                    <p:commandButton id="home" value="Inicio" action="home" icon="ui-icon-home"/>
+                    <p:commandButton id="home" value="Terminar" action="home" icon="ui-icon-home"/>
                 </h:form>   
 
             </ui:define>

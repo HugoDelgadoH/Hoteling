@@ -33,7 +33,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Hotel.findByNombre", query = "SELECT h FROM Hotel h WHERE h.nombre = :nombre"),
     @NamedQuery(name = "Hotel.findByCiudad", query = "SELECT h FROM Hotel h WHERE h.ciudad = :ciudad"),
     @NamedQuery(name = "Hotel.findByNumeroHab", query = "SELECT h FROM Hotel h WHERE h.numeroHab = :numeroHab"),
-    @NamedQuery(name = "Hotel.findByServicios", query = "SELECT h FROM Hotel h WHERE h.servicios = :servicios")})
+    @NamedQuery(name = "Hotel.findByServicios", query = "SELECT h FROM Hotel h WHERE h.servicios = :servicios"),
+    @NamedQuery(name = "Hotel.ciudadesDistinct", query = "SELECT DISTINCT h.ciudad FROM Hotel h")})
 public class Hotel implements Serializable {
 
     private static final long serialVersionUID = 1L;
