@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../WEB-INF/templateCliente.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+                    <h2><h:outputText value="Información de la reserva #{reservaClientBean.reserva.id}"/></h2>
+                    <p:panelGrid id="info" columns="2">
+                        <h:outputText value="Hotel: "/>
+                        <h:outputText value="#{reservaClientBean.getHotetById(reservaClientBean.reserva.hotel)}"/>
+                        <h:outputText value="Llegada: "/>
+                        <h:outputText value="#{reservaClientBean.reserva.fechaIni}"/>
+                        <h:outputText value="Salida: "/>
+                        <h:outputText value="#{reservaClientBean.reserva.fechaFin}"/>
+                        <h:outputText value="Precio: "/>
+                        <h:outputText value="50€"/>
+                    </p:panelGrid>
+                    <p:commandButton value="Back" action="verReservas" icon="ui-icon-arrowrefresh-1-w"/>
+                    <p:commandButton value="Cancelar" action="verReservas" actionListener="#{reservaClientBean.deleteReserva()}"/>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

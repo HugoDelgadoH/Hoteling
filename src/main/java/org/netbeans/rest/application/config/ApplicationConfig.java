@@ -29,6 +29,8 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(com.mycompany.hoteling.json.HotelReader.class);
+        resources.add(com.mycompany.hoteling.json.HotelWriter.class);
         resources.add(com.mycompany.hoteling.json.ReservaReader.class);
         resources.add(com.mycompany.hoteling.json.ReservaWriter.class);
         resources.add(com.mycompany.hoteling.rest.GrupoUsuarioFacadeREST.class);

@@ -5,7 +5,7 @@
  */
 package com.mycompany.hoteling.json;
 
-import com.mycompany.hoteling.entities.Reserva;
+import com.mycompany.hoteling.entities.Hotel;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
@@ -25,28 +25,28 @@ import javax.ws.rs.ext.Provider;
  */
 @Provider
 @Produces(MediaType.APPLICATION_JSON)
-public class ReservaWriter implements MessageBodyWriter<Reserva> {
-
-    @Override
+public class HotelWriter implements MessageBodyWriter<Hotel>{
+        @Override
     public boolean isWriteable(Class<?> type, Type type1, Annotation[] antns, MediaType mt) {
-        return Reserva.class.isAssignableFrom(type);
+        return Hotel.class.isAssignableFrom(type);
     }
 
     @Override
-    public long getSize(Reserva t, Class<?> type, Type type1, Annotation[] antns, MediaType mt) {
+    public long getSize(Hotel t, Class<?> type, Type type1, Annotation[] antns, MediaType mt) {
         return -1;
     }
 
     @Override
-    public void writeTo(Reserva t, Class<?> type, Type type1, Annotation[] antns, MediaType mt, MultivaluedMap<String, Object> mm, OutputStream out) throws IOException, WebApplicationException {
+    public void writeTo(Hotel t, Class<?> type, Type type1, Annotation[] antns, MediaType mt, MultivaluedMap<String, Object> mm, OutputStream out) throws IOException, WebApplicationException {
         JsonGenerator gen = Json.createGenerator(out);
         gen.writeStartObject()
-                .write("cliente", "user@gmail.com")
-                .write("hotel", t.getHotel())
-                .write("fecha_ini", t.getFechaIni())
-                .write("fecha_fin", t.getFechaFin())
-                .write("tarjeta_credito", t.getTarjetaCredito())
-                .write("fecha_tarjeta", t.getFechaTarjeta())
+                .write("empresa", t.getEmpresa())
+                .write("id", t.getId())
+                .write("nombre", t.getNombre())
+                .write("ciudad", t.getCiudad())
+                .write("numero_hab", t.getNumeroHab())
+                .write("servicios", t.getServicios())
                 .writeEnd();
-        gen.flush();    }
+        gen.flush();    
+    }    
 }
