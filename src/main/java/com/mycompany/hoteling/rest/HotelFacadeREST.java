@@ -8,7 +8,6 @@ package com.mycompany.hoteling.rest;
 import com.mycompany.hoteling.entities.Hotel;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -26,7 +25,6 @@ import javax.ws.rs.core.MediaType;
  * @author gohug
  */
 @Stateless
-@Named
 @Path("com.mycompany.hoteling.entities.hotel")
 public class HotelFacadeREST extends AbstractFacade<Hotel> {
 
@@ -70,7 +68,7 @@ public class HotelFacadeREST extends AbstractFacade<Hotel> {
     public List<Hotel> findAll() {
         return super.findAll();
     }
- 
+
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})

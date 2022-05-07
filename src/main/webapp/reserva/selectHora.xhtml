@@ -10,16 +10,16 @@
         <ui:composition template="./../WEB-INF/templateCliente.xhtml">
 
             <ui:define name="content">
-               <p:panelGrid id="info" columns="3">
-                    <h:outputText value="Hotel: #{reserva.hotetById}"/>
-                    <h:outputText value="Ciudad: #{reserva.ciudad}"/>
+                <p:panelGrid id="info" columns="3">
+                    <h:outputText value="Hotel: #{reservas.hotetById}"/>
+                    <h:outputText value="Ciudad: #{reservas.ciudad}"/>
                     <h:outputText value="Precio: 50€"/>
                 </p:panelGrid>
                 <h:form><!-- cuidado con el formato de fecha de ppostgres que es yyyy/MM/dd -->
                     <p:outputLabel  for="fechaI" value="Desde "/>
-                    <p:datePicker id="fechaI" value="#{reserva.fechaInicio}" monthNavigator="true" yearNavigator="true"/>
+                    <p:datePicker id="fechaI" value="#{reservas.fechaInicio}" pattern="dd/MM/yyyy" locale="es" monthNavigator="true" yearNavigator="true" yearRange="2022:2030" />
                     <p:outputLabel for="fechaF" value="Hasta "/>
-                    <p:datePicker id="fechaF" value="#{reserva.fechaFin}" pattern="dd/MM/yyyy" monthNavigator="true" yearNavigator="true" yearRange="2022:2030"/>
+                    <p:datePicker id="fechaF" value="#{reservas.fechaFin}" pattern="dd/MM/yyyy" locale="es" monthNavigator="true" yearNavigator="true" yearRange="2022:2030"/>
                     <p:commandButton id="back" value="Back" action="reserva"/>  
                     <p:commandButton id="next" value="Next" action="tarjeta"/>
                 </h:form>  

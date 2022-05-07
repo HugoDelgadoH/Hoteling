@@ -19,10 +19,10 @@
                         </h:panelGrid>
                         <h:panelGrid columns="3" id="gridTarjeta"> 
                             <p:outputLabel for="tarjeta" value="Tarjeta de credito"/>
-                            <p:inputMask id="tarjeta" value="#{reserva.tarjeta}" mask="9999-9999-9999-9999" required="true"/>
+                            <p:inputMask id="tarjeta" value="#{reservas.tarjeta}" mask="9999-9999-9999-9999" required="true"/>
                             <p:message for="tarjeta"/>
                             <p:outputLabel for="fecha" value="Fecha de expiracion (mes/año)"/>
-                            <p:datePicker id="fecha" view="month" value="#{reserva.fechaTarjeta}" pattern="MM/yyyy" locale="es" yearNavigator="true" yearRange="2022:2030" />
+                            <p:datePicker id="fecha" view="month" value="#{reservas.fechaTarjeta}" pattern="MM/yyyy" locale="es" yearNavigator="true" yearRange="2022:2030" />
                             <p:message for="fecha"/>
                         </h:panelGrid>
 

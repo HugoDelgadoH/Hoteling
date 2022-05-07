@@ -18,16 +18,16 @@
  
                              <h:panelGrid columns="4" cellpadding="7">
                                  <h:outputLabel for="ciudad" value="Ciudad: "/>
-                                 <p:selectOneMenu id="ciudad" value="#{reserva.ciudad}" required="true" label="Ciudad" style="width: 12rem">
+                                 <p:selectOneMenu id="ciudad" value="#{reservas.ciudad}" required="true" label="Ciudad" style="width: 12rem">
                                      <f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true"/>
                                      <f:selectItem itemLabel="Todos" itemValue="Todos"/>
-                                     <f:selectItems value="#{reserva.ciudadesDistinct}"
+                                     <f:selectItems value="#{reservas.ciudadesDistinct}"
                                                     var="h"
                                                     itemValue="#{h}"
                                                     itemLabel="#{h}"/>
                                  </p:selectOneMenu>
                                  <p:message for="ciudad"/>
-                                 <h:outputText value="#{reserva.ciudad}"/>
+                                 <h:outputText value="#{reservas.ciudad}"/>
                              </h:panelGrid>
                          </p:panel>
  
@@ -38,10 +38,10 @@
                  <p:outputPanel layout="block" id="results">
                      <h2>Selecciona un hotel</h2>
                      <h:form><!-- como establezco reserva.ciudad para el hotel elegido en este form? -->
-                         <h:selectOneRadio value="#{reserva.hotelId}"
+                         <h:selectOneRadio value="#{reservas.hotelId}"
                                            layout="pageDirection"
                                            required="true">
-                             <f:selectItems value="#{reserva.hotelesByCiudad}"
+                             <f:selectItems value="#{reservas.hotelesByCiudad}"
                                             var="m"
                                             itemValue="#{m.id}"
                                             itemLabel="#{m.nombre}, #{m.ciudad}"/>

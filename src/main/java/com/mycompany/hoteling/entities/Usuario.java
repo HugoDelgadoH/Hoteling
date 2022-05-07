@@ -7,7 +7,6 @@ package com.mycompany.hoteling.entities;
 
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,8 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -40,8 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuario.findByDomicilio", query = "SELECT u FROM Usuario u WHERE u.domicilio = :domicilio"),
     @NamedQuery(name = "Usuario.findByCapitalSocial", query = "SELECT u FROM Usuario u WHERE u.capitalSocial = :capitalSocial"),
     @NamedQuery(name = "Usuario.findByOtros", query = "SELECT u FROM Usuario u WHERE u.otros = :otros"),
-    @NamedQuery(name = "Usuario.findByVerificado", query = "SELECT u FROM Usuario u WHERE u.verificado = :verificado"),
-    @NamedQuery(name = "Usuario.pwByUser", query = "SELECT u FROM Usuario u WHERE u.email = :email AND u.password = :password")})
+    @NamedQuery(name = "Usuario.findByVerificado", query = "SELECT u FROM Usuario u WHERE u.verificado = :verificado")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -68,9 +64,9 @@ public class Usuario implements Serializable {
     @Size(max = 9)
     @Column(name = "telefono")
     private String telefono;
+    @Size(max = 10)
     @Column(name = "fecha_nacimiento")
-    @Temporal(TemporalType.DATE)
-    private Date fechaNacimiento;
+    private String fechaNacimiento;
     @Size(max = 9)
     @Column(name = "cif")
     private String cif;
@@ -138,11 +134,11 @@ public class Usuario implements Serializable {
         this.telefono = telefono;
     }
 
-    public Date getFechaNacimiento() {
+    public String getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 

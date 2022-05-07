@@ -6,15 +6,29 @@
 package com.mycompany.hoteling.cliente;
 
 import com.mycompany.hoteling.entities.Hotel;
+import com.mycompany.hoteling.entities.Reserva;
+import com.mycompany.hoteling.json.ReservaReader;
+import com.mycompany.hoteling.json.ReservaWriter;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.faces.flow.FlowScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
@@ -22,8 +36,9 @@ import javax.persistence.PersistenceContext;
  */
 @Named
 @FlowScoped("reserva")
-public class Reserva implements Serializable {
+public class Reservas implements Serializable {
 
+    private int id;
     private String ciudad;
     private int hotelId;
     private Date fechaInicio = new Date();
@@ -31,9 +46,21 @@ public class Reserva implements Serializable {
     private Date fechaTarjeta = new Date();
     private String tarjeta = "";
     private String hotel = "";
+    private String fechaInicioString = "";
+    private String fechaFinString = "";
+    private String fechaTarjetaString = "";
+    private SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+    Client client;
+    WebTarget target;
 
     @PersistenceContext
     EntityManager em;
+
+    @PostConstruct
+    public void init() {
+        client = ClientBuilder.newClient();
+        target = client.target("http://localhost:8080/hoteling/webresources/com.mycompany.hoteling.entities.reserva");
+    }
 
     public String getCiudad() {
         return ciudad;
@@ -103,11 +130,20 @@ public class Reserva implements Serializable {
         this.hotelId = hotelId;
     }
 
-    public Date getFechaInicio() {
-        //SimpleDateFormat f=new SimpleDateFormat("dd-MM-yyyy");
-          
-       // return f.format(fechaInicio);
-       return fechaInicio;
+    public Date getFechaInicio() throws ParseException {
+        return fechaInicio;
+    }
+
+    public String getFechaInicioString() {
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String d = formatter.format(fechaInicio);
+        return d;
+    }
+
+    public String getFechaFinString() {
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String d = formatter.format(fechaFin);
+        return d;
     }
 
     public void setFechaInicio(Date fechaInicio) {
@@ -134,6 +170,12 @@ public class Reserva implements Serializable {
         return fechaTarjeta;
     }
 
+    public String getFechaTarjetaString() {
+        DateFormat formatter = new SimpleDateFormat("MM/yyyy");
+        String d = formatter.format(fechaTarjeta);
+        return d;
+    }
+
     public void setFechaTarjeta(Date fechaTarjeta) {
         this.fechaTarjeta = fechaTarjeta;
     }
@@ -144,6 +186,36 @@ public class Reserva implements Serializable {
 
     public void setHotel(String hotel) {
         this.hotel = hotel;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void addReserva() {
+        Reserva h = new Reserva();
+        h.setCliente("user@gmail.com");//cambiar cuando sepamos el usuario
+        h.setHotel(this.hotelId);
+        h.setFechaIni(getFechaInicioString());
+        h.setFechaFin(getFechaFinString());
+        h.setTarjetaCredito(this.tarjeta);
+        h.setFechaTarjeta(getFechaTarjetaString());
+        target.register(ReservaWriter.class)
+                .request()
+                .post(Entity.entity(h, MediaType.APPLICATION_JSON));
+    }
+
+    public Reserva getReserva() {
+        return target
+                .register(ReservaReader.class)
+                .path("{id}")
+                .resolveTemplate("id", this.id) //De donde sale el nombre de este id
+                .request(MediaType.APPLICATION_JSON)
+                .get(Reserva.class);
     }
 
 }

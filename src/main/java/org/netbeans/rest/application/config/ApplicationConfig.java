@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.hoteling.rest;
+package org.netbeans.rest.application.config;
 
 import java.util.Set;
 import javax.ws.rs.core.Application;
@@ -29,11 +29,12 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(com.mycompany.hoteling.json.ReservaReader.class);
+        resources.add(com.mycompany.hoteling.json.ReservaWriter.class);
         resources.add(com.mycompany.hoteling.rest.GrupoUsuarioFacadeREST.class);
         resources.add(com.mycompany.hoteling.rest.HabitacionFacadeREST.class);
         resources.add(com.mycompany.hoteling.rest.HotelFacadeREST.class);
         resources.add(com.mycompany.hoteling.rest.ReservaFacadeREST.class);
-        resources.add(com.mycompany.hoteling.rest.UsuarioFacadeREST.class);
     }
     
 }
