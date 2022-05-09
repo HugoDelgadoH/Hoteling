@@ -7,7 +7,7 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-       <!-- <link href="${facesContext.externalContext.requestContextPath}/resources/css/default.css" rel="stylesheet" type="text/css" />
+        <!--<link href="${facesContext.externalContext.requestContextPath}/resources/css/default.css" rel="stylesheet" type="text/css" />
         <link href="${facesContext.externalContext.requestContextPath}/resources/css/cssLayout.css" rel="stylesheet" type="text/css" />-->
         <title>Hoteling</title>
     </h:head>
@@ -20,10 +20,15 @@
 
             <p:layoutUnit position="west" size="200" header="Menú" collapsible="true">
                 <h:form>
-                    <p:menu>
+                    <p:menu toggleable="true">
                         <p:menuitem value="Inicio" outcome="/cliente/index.xhtml" icon="ui-icon-home" />
-                        <p:menuitem value="Reservar" action="reserva"/>
-                        <p:menuitem value="Ver Reservas" action="/cliente/verReservas.xhtml"/>
+                        <p:submenu label="Reservas">
+                            <p:menuitem value="Reservar" action="reserva"/>
+                            <p:menuitem value="Ver Reservas" action="/cliente/verReservas.xhtml"/>
+                        </p:submenu>
+                        <p:submenu label="Perfil">
+                            <p:menuitem value="Ver Perfil" action="/cliente/modificarPerfil.xhtml"/>
+                        </p:submenu>
                     </p:menu>
                 </h:form>
             </p:layoutUnit>

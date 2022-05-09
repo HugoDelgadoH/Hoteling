@@ -20,8 +20,12 @@
 
             <p:layoutUnit position="west" size="200" header="Menú" collapsible="true">
                 <h:form>
-                    <p:menu>
+                    <p:menu toggleable="true">
                         <p:menuitem value="Inicio" outcome="/empresa/index.xhtml" icon="ui-icon-home" />
+                        <p:submenu label="Hoteles">
+                            <p:menuitem value="Añadir" action="/empresa/addHotel.xhtml"/>
+                            <p:menuitem value="Ver Hoteles" action="/empresa/verHoteles.xhtml"/>
+                        </p:submenu>
                     </p:menu>
                 </h:form>
             </p:layoutUnit>

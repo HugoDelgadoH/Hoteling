@@ -10,12 +10,20 @@
         <ui:composition template="./../WEB-INF/templateCliente.xhtml">
 
             <ui:define name="content">
-                <p:panelGrid id="info" columns="3">
-                    <h:outputText value="Hotel: #{reservas.hotetById}"/>
-                    <h:outputText value="Ciudad: #{reservas.ciudad}"/>
-                    <h:outputText value="Precio: 50€"/>
-                </p:panelGrid>
-                <h:form><!-- cuidado con el formato de fecha de ppostgres que es yyyy/MM/dd -->
+                <h:form>
+                    <div class="steps">
+                        <p:steps activeIndex="1">
+                            <p:menuitem value="Elige Hotel"/>
+                            <p:menuitem value="Fecha entrada/salida"/>
+                            <p:menuitem value="Pago"/>
+                            <p:menuitem value="Confirmación"/>
+                        </p:steps>
+                    </div>
+                    <p:panelGrid id="info" columns="3">
+                        <h:outputText value="Hotel: #{reservas.hotetById}"/>
+                        <h:outputText value="Ciudad: #{reservas.ciudad}"/>
+                        <h:outputText value="Precio: 50€"/>
+                    </p:panelGrid>
                     <p:outputLabel  for="fechaI" value="Desde "/>
                     <p:datePicker id="fechaI" value="#{reservas.fechaInicio}" pattern="dd/MM/yyyy" locale="es" monthNavigator="true" yearNavigator="true" yearRange="2022:2030" />
                     <p:outputLabel for="fechaF" value="Hasta "/>

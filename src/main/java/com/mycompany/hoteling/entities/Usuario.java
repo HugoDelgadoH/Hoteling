@@ -37,7 +37,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuario.findByDomicilio", query = "SELECT u FROM Usuario u WHERE u.domicilio = :domicilio"),
     @NamedQuery(name = "Usuario.findByCapitalSocial", query = "SELECT u FROM Usuario u WHERE u.capitalSocial = :capitalSocial"),
     @NamedQuery(name = "Usuario.findByOtros", query = "SELECT u FROM Usuario u WHERE u.otros = :otros"),
-    @NamedQuery(name = "Usuario.findByVerificado", query = "SELECT u FROM Usuario u WHERE u.verificado = :verificado")})
+    @NamedQuery(name = "Usuario.findByVerificado", query = "SELECT u FROM Usuario u WHERE u.verificado = :verificado"),
+    @NamedQuery(name = "Usuario.delete", query = "DELETE FROM Usuario u WHERE u.email = :email AND u.password = :password")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;

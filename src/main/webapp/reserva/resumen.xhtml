@@ -7,20 +7,27 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
-
+        
         <ui:composition template="./../WEB-INF/templateCliente.xhtml">
 
             <ui:define name="content">
                 <h:form>  
+                    <div class="steps">
+                        <p:steps activeIndex="3">
+                            <p:menuitem value="Elige Hotel"/>
+                            <p:menuitem value="Fecha entrada/salida"/>
+                            <p:menuitem value="Pago"/>
+                            <p:menuitem value="Confirmación"/>
+                        </p:steps>
+                    </div>
                     <p:panelGrid id="print" columns ="1">
-                        <p:panelGrid id="info" columns="7">
+                        <p:panelGrid id="info" columns="6">
                             <h:outputText value="Hotel: #{reservas.hotel}"/>
                             <h:outputText value="Ciudad: #{reservas.ciudad}"/>
                             <h:outputText value="Llegada:"/>
                             <h:outputText value="#{reservas.fechaInicioString}"/>
                             <h:outputText value="Salida:"/>
                             <h:outputText value="#{reservas.fechaFinString}"/>
-                            <h:outputText value="#{reservas.hotelId}"/>
                         </p:panelGrid>
                         <p:panelGrid id="datosTarjeta" columns="2">
                             <h:outputText value="Precio:"/>

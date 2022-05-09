@@ -11,6 +11,14 @@
 
             <ui:define name="content">
                 <h:form prependId="false">
+                    <div class="steps">
+                        <p:steps activeIndex="2">
+                            <p:menuitem value="Elige Hotel"/>
+                            <p:menuitem value="Fecha entrada/salida"/>
+                            <p:menuitem value="Pago"/>
+                            <p:menuitem value="Confirmación"/>
+                        </p:steps>
+                    </div>
                     <p:panel id="panel" header="Introduzca informacion del pago" styleClass="p-mb-3">
 
                         <h:panelGrid columns="2" id="panelPrecio" cellpadding="7"> 
