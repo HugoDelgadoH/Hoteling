@@ -25,12 +25,12 @@ import javax.ws.rs.client.WebTarget;
 @Named
 @RequestScoped
 public class PerfilClientBean {
-
+    
     @Inject
     PerfilBackingBean bean;
     /* Client client;
     WebTarget target;*/
-
+    
     @PersistenceContext
     EntityManager em;
 
@@ -50,16 +50,42 @@ public class PerfilClientBean {
                     Usuario.class)
                     .setParameter("email", "user@gmail.com")
                     .getSingleResult();
-
+            
         } catch (NoResultException e) {
             return null;
         }
     }
-
+    
     public void deleteUser() {
         em.createNamedQuery("Usuario.delete",
                 Usuario.class)
                 .setParameter("email", "prueba@gmail.com")
                 .setParameter("password", "1234");//No funciona por usar em
     }
+    
+    public Usuario getUsuarioForBack() {
+        try {
+            Usuario u = em.createNamedQuery("Usuario.findByEmail",
+                    Usuario.class)
+                    .setParameter("email", "user@gmail.com")
+                    .getSingleResult();
+            
+            bean.setEmail(u.getEmail());
+            bean.setDni(u.getDni());
+            bean.setFecha_nac(u.getFechaNacimiento());
+            bean.setNombre(u.getNombre());
+            bean.setTelefono(u.getTelefono());
+            bean.setDni(u.getDni());
+            
+            return u;
+            
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+    
+    public void modificaUser(){
+        
+    }
+    
 }

@@ -36,7 +36,7 @@ public class HotelClientBean {
     Client client;
     WebTarget target;
 
-    Hotel hotel;
+    //Hotel hotel;
 
     @PersistenceContext
     EntityManager em;

@@ -3,31 +3,79 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <!--<link href="${facesContext.externalContext.requestContextPath}/resources/css/default.css" rel="stylesheet" type="text/css" />
-        <link href="${facesContext.externalContext.requestContextPath}/resources/css/cssLayout.css" rel="stylesheet" type="text/css" />-->
+        <link href="${facesContext.externalContext.requestContextPath}/resources/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="${facesContext.externalContext.requestContextPath}/resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
         <title>Hoteling</title>
     </h:head>
 
     <h:body>
         <p:layout fullPage="true">
-            <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
-                <h2><h:outputText value= "HOTELING"/></h2>
+            <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true" >
+                <h2><h:outputText value="Hoteling"/></h2>
+                <h:form>
+                    <c:choose>
+                        <c:when test="#{request.isUserInRole('cliente')}">
+                            <p:toolbar>
+                                <f:facet name="right">
+                                    <p:menuButton value="#{loginView.authenticatedUser.nombre}">
+                                        <p:menuitem value="Cerrar sesión" action="#{loginView.logout}" icon="ui-icon-power" />
+                                    </p:menuButton>
+                                </f:facet>
+                            </p:toolbar>
+                        </c:when>
+                        <c:when test="#{request.isUserInRole('empresa')}">
+                            <p:toolbar>
+                                <f:facet name="right">
+                                    <p:menuButton value="#{loginView.authenticatedUser.nombre}">
+                                        <p:menuitem value="Cerrar sesión" action="#{loginView.logout}" icon="ui-icon-power" />
+                                    </p:menuButton>
+                                </f:facet>
+                            </p:toolbar>
+                        </c:when>
+                        <c:when test="#{request.isUserInRole('admin')}">
+                            <p:toolbar>
+                                <f:facet name="right">
+                                    <p:menuButton value="#{loginView.authenticatedUser.nombre}">
+                                        <p:menuitem value="Cerrar sesión" action="#{loginView.logout}" icon="ui-icon-power" />
+                                    </p:menuButton>
+                                </f:facet>
+                            </p:toolbar>
+                        </c:when>
+                    </c:choose>
+                </h:form>
             </p:layoutUnit>
 
             <p:layoutUnit position="west" size="200" header="Menú" collapsible="true">
                 <h:form>
-                    <p:menu toggleable="true">
-                        <p:menuitem value="Inicio" outcome="/cliente/index.xhtml" icon="ui-icon-home" />
-                        <p:submenu label="Reservas">
-                            <p:menuitem value="Reservar" action="reserva"/>
-                            <p:menuitem value="Ver Reservas" action="/cliente/verReservas.xhtml"/>
+                    <p:menu>
+                        <c:if test="${request.isUserInRole('cliente')==false and request.isUserInRole('empresa')==false}">
+                            <p:menuitem value="Inicio" outcome="/index.xhtml" icon="ui-icon-home" />
+                            <p:menuitem value="Iniciar Sesión" outcome="/login.xhtml" icon="ui-icon-key"/>
+                            <p:menuitem value="Registro" outcome="/registro.xhtml" icon="ui-icon-pencil"/>
+                        </c:if>
+                        <p:submenu label ="Usuario" rendered="#{request.isUserInRole('cliente')}">
+                            <p:submenu label="Reservas">
+                                <p:menuitem value="Reservar" action="reserva"/>
+                                <p:menuitem value="Ver Reservas" action="/cliente/verReservas.xhtml"/>
+                            </p:submenu>
+                            <p:submenu label="Perfil">
+                                <p:menuitem value="Ver Perfil" action="/cliente/modificarPerfil.xhtml"/>
+                            </p:submenu>
                         </p:submenu>
-                        <p:submenu label="Perfil">
-                            <p:menuitem value="Ver Perfil" action="/cliente/modificarPerfil.xhtml"/>
+                        <p:submenu label ="Empresa" rendered="#{request.isUserInRole('empresa')}">
+                            <p:submenu label="Hoteles">
+                                <p:menuitem value="Añadir" action="/empresa/addHotel.xhtml"/>
+                                <p:menuitem value="Ver Hoteles" action="/empresa/verHoteles.xhtml"/>
+                            </p:submenu>
+                        </p:submenu>
+                        <p:submenu label ="Administrador" rendered="#{request.isUserInRole('admin')}">
+                            <p:menuitem value="Validar" outcome="/admin/index.xhtml" icon="ui-icon-calculator"/>
                         </p:submenu>
                     </p:menu>
                 </h:form>
