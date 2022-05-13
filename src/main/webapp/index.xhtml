@@ -10,28 +10,55 @@
 
         <ui:composition template="./WEB-INF/templateCliente.xhtml">
             <ui:define name="content">
-                <h:outputText value="Mostrando #{hotelFacadeREST.countREST()} hoteles"/>
-                <f:view>
+
+                <div class="card product">
                     <h:form>
-                        <h1><h:outputText value="Lista de hoteles disponibles"/></h1>
-                        <div class="card">
-                            <p:dataTable value="#{hotelFacadeREST.findAll()}" var="item">
-                                <p:column headerText="ID">
-                                    <h:outputText value="#{item.id}" />
-                                </p:column>
+                        <p:dataView value="#{hotelFacadeREST.findAll()}" var="product" rows="12" paginator="true"
+                                    rowsPerPageTemplate="6,12,16"
+                                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                    gridIcon="pi pi-th-large" listIcon="pi pi-bars">
 
-                                <p:column headerText="Nombre">
-                                    <h:outputText value="#{item.nombre}" />
-                                </p:column>
+                            <p:dataViewGridItem>
+                                <div class="product-grid-item card border-1">
+                                    <div class="product-grid-item-top">
+                                        <div>
+                                            <i class="pi pi-tag product-category-icon"/>
+                                            <span class="product-category">#{product.ciudad}</span>
+                                        </div>
+                                        <span class="product-badge">#{product.empresa}</span>
+                                    </div>
+                                    <div class="product-grid-item-content">
+                                        <p:graphicImage url="https://cdn.pixabay.com/photo/2021/08/25/20/42/field-6574455__480.jpg" library="demo" height="200" width="250"/>
+                                        <div class="product-name">#{product.nombre}</div>
+                                        <div class="product-description">#{product.servicios}</div>
+                                        <p:rating readonly="true" value="#{dataGridView.rating}"/>
+                                    </div>
+                                    <div class="product-grid-item-bottom">
+                                        <h:outputText value="50€" styleClass="product-price"/>
+                                    </div>
+                                </div>
+                            </p:dataViewGridItem>
+                            
+                            <p:dataViewListItem>
+                                <div class="product-list-item">
+                                    <p:graphicImage url="https://cdn.pixabay.com/photo/2021/08/25/20/42/field-6574455__480.jpg" library="demo" height="200" width="250"/>
+                                    <div class="product-list-detail">
+                                        <div class="product-name">#{product.nombre}</div>
+                                        <div class="product-description">#{product.servicios}</div>
+                                        <p:rating readonly="true" value="#{dataGridView.rating}"/>
+                                        <i class="pi pi-tag product-category-icon"/><span
+                                            class="product-category">#{product.ciudad}</span>
+                                    </div>
+                                    <div class="product-list-action">
+                                        <h:outputText value="50€" styleClass="product-price"/>
+                                        <span class="product-badge">#{product.empresa}</span>
+                                    </div>
+                                </div>
+                            </p:dataViewListItem>
+                        </p:dataView>
 
-                                <p:column headerText="Ciudad">
-                                    <h:outputText value="#{item.ciudad}" />
-                                </p:column>
-
-                            </p:dataTable>
-                        </div>
                     </h:form>
-                </f:view>
+                </div>
             </ui:define>
 
         </ui:composition>

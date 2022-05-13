@@ -28,7 +28,7 @@ public class PerfilClientBean {
     
     @Inject
     PerfilBackingBean bean;
-    /* Client client;
+     /*Client client;
     WebTarget target;*/
     
     @PersistenceContext

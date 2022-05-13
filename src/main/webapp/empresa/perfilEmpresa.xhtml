@@ -19,14 +19,17 @@
                         <h:outputText value="Email: "/>
                         <h:inputText id="email" value="#{perfilBackingBean.email}" required="false" disabled="#{utiles.disabled}"/>
                         <p:commandButton value="Editar" actionListener="#{utiles.action}" update="email"/>
-                        <h:outputText value="Fecha Nacimiento: "/>
-                        <h:inputText id="fecha" value="#{perfilBackingBean.fecha_nac}" required="false" disabled="#{utiles.disabled}"/>
+                        <h:outputText value="CIF: "/>
+                        <h:inputText id="fecha" value="#{perfilBackingBean.cif}" required="false" disabled="#{utiles.disabled}"/>
                         <p:commandButton value="Editar" actionListener="#{utiles.action}" update="fecha"/>
-                        <h:outputText value="Teléfono: "/>
-                        <h:inputText id="tlf" value="#{perfilBackingBean.telefono}" required="false" disabled="#{utiles.disabled}"/>
+                        <h:outputText value="Capital Social: "/>
+                        <h:inputText id="tlf" value="#{perfilBackingBean.capital_social}" required="false" disabled="#{utiles.disabled}"/>
                         <p:commandButton value="Editar" actionListener="#{utiles.action}" update="tlf"/>
-                        <h:outputText value="DNI: "/>
-                        <h:inputText id="dni" value="#{perfilBackingBean.dni}" required="false" disabled="#{utiles.disabled}"/>
+                        <h:outputText value="Otros: "/>
+                        <h:inputText id="dni" value="#{perfilBackingBean.otros}" required="false" disabled="#{utiles.disabled}"/>
+                        <p:commandButton value="Editar" actionListener="#{utiles.action}" update="dni"/>
+                        <h:outputText value="Verificado: "/>
+                        <h:inputText id="ver" value="#{perfilBackingBean.verificado}" required="false" disabled="#{utiles.disabled}"/>
                         <p:commandButton value="Editar" actionListener="#{utiles.action}" update="dni"/>
                     </p:panelGrid>
                     <p:commandButton value="Aplicar Cambios" action="./index.xhtml" actionListener="#{perfilClientBean.modificaUser()}"/>
