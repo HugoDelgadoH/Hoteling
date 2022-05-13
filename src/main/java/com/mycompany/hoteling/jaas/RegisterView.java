@@ -7,6 +7,9 @@ package com.mycompany.hoteling.jaas;
 
 import com.mycompany.hoteling.entities.Usuario;
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -35,13 +38,10 @@ public class RegisterView implements Serializable {
     private Date fecha_nac;
     private String dni;
     private String telefono;
-    private String fecha_nacString;
     private String cif;
     private String domicilio;
-    private double capital_social;
+    private BigInteger capital_social;
     private String otros;
-    private boolean verificado;
-    private String tipoUsuario;//O boolean
 
     public void validatePassword(ComponentSystemEvent event) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -71,9 +71,15 @@ public class RegisterView implements Serializable {
     }
 
     public String register() {
-        Usuario user = new Usuario(email, nombre, password);
+        Usuario user = new Usuario(email, nombre, password, dni, telefono, getFecha_nacString());
         userEJB.createUser(user);
         //System.out.println("Nuevo usuario creado con e-mail: " + email + " y nombre:" + nombre);
+        return "registerOk";
+    }
+
+    public String registerEmpresa() {
+        Usuario user = new Usuario(email, nombre, password, cif, domicilio, capital_social, otros);
+        userEJB.createEmpresa(user);
         return "registerOk";
     }
 
@@ -107,6 +113,68 @@ public class RegisterView implements Serializable {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    public Date getFecha_nac() {
+        return fecha_nac;
+    }
+
+    public void setFecha_nac(Date fecha_nac) {
+        this.fecha_nac = fecha_nac;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getFecha_nacString() {
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String d = formatter.format(fecha_nac);
+        return d;
+    }
+
+    public String getCif() {
+        return cif;
+    }
+
+    public void setCif(String cif) {
+        this.cif = cif;
+    }
+
+    public String getDomicilio() {
+        return domicilio;
+    }
+
+    public void setDomicilio(String domicilio) {
+        this.domicilio = domicilio;
+    }
+
+    public BigInteger getCapital_social() {
+        return capital_social;
+    }
+
+    public void setCapital_social(BigInteger capital_social) {
+        this.capital_social = capital_social;
+    }
+
+    public String getOtros() {
+        return otros;
+    }
+
+    public void setOtros(String otros) {
+        this.otros = otros;
     }
 
 }

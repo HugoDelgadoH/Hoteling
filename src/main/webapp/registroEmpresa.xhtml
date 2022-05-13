@@ -2,9 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -13,30 +13,33 @@
             <ui:define name="content">
                 <h:form>
                     <f:event listener="#{registerView.validatePassword}" type="postValidate" />
-                    <p:panel header="Crear una nueva cuenta">
+                    <p:panel header="Crear una cuenta de Empresa">
                         <h:panelGrid id="grid" columns="3">
-                            <h:outputLabel for="name" value="Nombre:" style="font-weight:bold"/>
+                            <h:outputLabel for="name" value="Nombre de Empresa:" style="font-weight:bold"/>
                             <p:inputText id="name" value="#{registerView.nombre}" required="true"
                                          requiredMessage="Por favor, introduce tu nombre." maxlength="30"/>
                             <p:message for="name"/>
-                            <h:outputLabel for="dni" value="DNI: " style="font-weight:bold"/>
-                            <p:inputText id="dni" value="#{registerView.dni}" required="true"
-                                         requiredMessage="Por favor, introduce tu DNI." maxlength="30"/>
-                            <p:message for="dni"/>
-                            <h:outputLabel for="email" value="E-Mail:" style="font-weight:bold"/>
+                            <h:outputLabel for="email" value="E-Mail de contacto:" style="font-weight:bold"/>
                             <p:inputText id="email" value="#{registerView.email}" required="true"
-                                         requiredMessage="Por favor, introduce tu email.">
+                                         requiredMessage="Por favor, introduce un email.">
                                 <f:validator validatorId="emailValidator" />
                             </p:inputText>
                             <p:message for="email"/>
-                            <h:outputLabel for="fecha" value="Fecha de Nacimiento: " style="font-weight:bold"/>
-                            <p:datePicker id="fecha" value="#{registerView.fecha_nac}" required="true"
-                                          requiredMessage="Por favor, introduce tu fecha de nacimiento." yearNavigator="true" yearRange="1930:2005"/>
-                            <p:message for="fecha"/>
-                            <h:outputLabel for="tlf" value="Teléfono: " style="font-weight:bold"/>
-                            <p:inputText id="tlf" value="#{registerView.telefono}" required="true"
-                                         requiredMessage="Por favor, introduce tu número de teléfono." maxlength="9"/>
-                            <p:message for="tlf"/>
+                            <h:outputLabel for="cif" value="CIF de la Empresa:" style="font-weight:bold"/>
+                            <p:inputText id="cif" value="#{registerView.cif}" required="true"
+                                         requiredMessage="Por favor, introduce el CIF." maxlength="9"/>
+                            <p:message for="cif"/>
+                            <h:outputLabel for="domic" value="Domicilio fiscal:" style="font-weight:bold"/>
+                            <p:inputText id="domic" value="#{registerView.domicilio}" required="true"
+                                         requiredMessage="Por favor, introduce el domicilio." maxlength="200"/>
+                            <p:message for="domic"/>
+                            <h:outputLabel for="cap" value="Capital Social:" style="font-weight:bold"/>
+                            <p:inputNumber id="cap" value="#{registerView.capital_social}" required="true"
+                                           requiredMessage="Por favor, introduce el capital social."/>
+                            <p:message for="cap"/>
+                            <h:outputLabel for="otros" value="Otros: " style="font-weight:bold"/>
+                            <p:inputText id="otros" value="#{registerView.otros}" required="false" maxlength="200"/>
+                            <p:message for="otros"/>
                             <h:outputLabel for="password" value="Contraseña:" style="font-weight:bold"/>
                             <p:password id="password" value="#{registerView.password}" feedback="true"
                                         required="true" requiredMessage="Por favor, introduce tu contraseña."
@@ -52,10 +55,9 @@
                                         requiredMessage="Por favor, confirma tu contraseña."/>
                             <p:message for="confirmpassword"/>
                         </h:panelGrid>
-                        <p:commandButton action="#{registerView.register}" update="grid" value="Regístrate!" icon="uiicon-pencil"/>
+                        <p:commandButton action="#{registerView.registerEmpresa()}" update="grid" value="Regístrate!" icon="uiicon-pencil"/>
                     </p:panel>
-                    <p:link outcome="registroEmpresa" value="¿Eres una empresa? Regístrate aquí"/>
-                </h:form>
+                </h:form>            
             </ui:define>
 
         </ui:composition>

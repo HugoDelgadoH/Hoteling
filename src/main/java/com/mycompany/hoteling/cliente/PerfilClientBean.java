@@ -33,6 +33,7 @@ public class PerfilClientBean {
     
     @PersistenceContext
     EntityManager em;
+    
 
     /*@PostConstruct
     public void init() {
@@ -44,11 +45,12 @@ public class PerfilClientBean {
     public void destroy() {
         client.close();
     }*/
-    public Usuario getUserByEmail() {
+    
+    public Usuario getUserByEmail(String email) {
         try {
             return em.createNamedQuery("Usuario.findByEmail",
                     Usuario.class)
-                    .setParameter("email", "user@gmail.com")
+                    .setParameter("email", email)
                     .getSingleResult();
             
         } catch (NoResultException e) {
@@ -56,18 +58,18 @@ public class PerfilClientBean {
         }
     }
     
-    public void deleteUser() {
+    public void deleteUser(String email) {
         em.createNamedQuery("Usuario.delete",
                 Usuario.class)
-                .setParameter("email", "prueba@gmail.com")
+                .setParameter("email", email)
                 .setParameter("password", "1234");//No funciona por usar em
     }
     
-    public Usuario getUsuarioForBack() {
+    public Usuario getUsuarioForBack(String email) {
         try {
             Usuario u = em.createNamedQuery("Usuario.findByEmail",
                     Usuario.class)
-                    .setParameter("email", "user@gmail.com")
+                    .setParameter("email", email)
                     .getSingleResult();
             
             bean.setEmail(u.getEmail());

@@ -11,7 +11,7 @@
 
             <ui:define name="content">
                 <h:form>
-                    <h2><h:outputText value="Información de perfil #{perfilClientBean.usuarioForBack.nombre}"/></h2>
+                    <h2><h:outputText value="Información de perfil #{perfilClientBean.getUsuarioForBack(loginView.authenticatedUser.email)}"/></h2>
                     <p:panelGrid id="infoPerfil" columns="3">
                         <h:outputText value="Nombre de Usuario: "/>
                         <h:inputText id="nombre" value="#{perfilBackingBean.nombre}" required="false" disabled="#{utiles.disabled}"/>

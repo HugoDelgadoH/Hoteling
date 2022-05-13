@@ -95,6 +95,25 @@ public class Usuario implements Serializable {
         this.password = password;
     }
 
+    public Usuario(String email, String nombre, String password, String dni, String telefono, String fecha_nac) {
+        this.email = email;
+        this.nombre = nombre;
+        this.password = password;
+        this.dni = dni;
+        this.telefono = telefono;
+        this.fechaNacimiento = fecha_nac;
+    }
+
+    public Usuario(String email, String nombre, String password, String cif, String domicilio, BigInteger capitalSocial, String otros) {
+        this.email = email;
+        this.nombre = nombre;
+        this.password = password;
+        this.cif=cif;
+        this.domicilio=domicilio;
+        this.capitalSocial=capitalSocial;
+        this.otros=otros;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -207,5 +226,5 @@ public class Usuario implements Serializable {
     public String toString() {
         return "com.mycompany.hoteling.entities.Usuario[ email=" + email + " ]";
     }
-    
+
 }
