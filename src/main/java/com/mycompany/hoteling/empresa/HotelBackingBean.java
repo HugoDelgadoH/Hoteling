@@ -22,7 +22,8 @@ public class HotelBackingBean implements Serializable{
     private double precio;
     private String servicios;
     private int id;
-
+    private String empresa;
+    
     public String getNombre() {
         return nombre;
     }
@@ -70,6 +71,13 @@ public class HotelBackingBean implements Serializable{
     public void setId(int id) {
         this.id = id;
     }
-    
+
+    public String getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(String empresa) {
+        this.empresa = empresa;
+    }
     
 }

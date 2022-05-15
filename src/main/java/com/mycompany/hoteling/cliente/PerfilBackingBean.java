@@ -6,6 +6,7 @@
 package com.mycompany.hoteling.cliente;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
@@ -15,16 +16,19 @@ import javax.inject.Named;
  */
 @Named
 @SessionScoped
-public class PerfilBackingBean implements Serializable{
+public class PerfilBackingBean implements Serializable {
+
     String nombre;
     String email;
     String password;
+    String NEWpassword;
+    String OLDpassword;
     String dni;
     String telefono;
-    String fecha_nac;
+    String fechaNac;
     String cif;
     String domicilio;
-    double capital_social;
+    BigInteger capitalSocial;
     String otros;
     int verificado;
 
@@ -68,14 +72,6 @@ public class PerfilBackingBean implements Serializable{
         this.telefono = telefono;
     }
 
-    public String getFecha_nac() {
-        return fecha_nac;
-    }
-
-    public void setFecha_nac(String fecha_nac) {
-        this.fecha_nac = fecha_nac;
-    }
-
     public String getCif() {
         return cif;
     }
@@ -90,14 +86,6 @@ public class PerfilBackingBean implements Serializable{
 
     public void setDomicilio(String domicilio) {
         this.domicilio = domicilio;
-    }
-
-    public double getCapital_social() {
-        return capital_social;
-    }
-
-    public void setCapital_social(double capital_social) {
-        this.capital_social = capital_social;
     }
 
     public String getOtros() {
@@ -115,6 +103,37 @@ public class PerfilBackingBean implements Serializable{
     public void setVerificado(int verificado) {
         this.verificado = verificado;
     }
-    
-    
+
+    public String getNEWpassword() {
+        return NEWpassword;
+    }
+
+    public void setNEWpassword(String NEWpassword) {
+        this.NEWpassword = NEWpassword;
+    }
+
+    public String getFechaNac() {
+        return fechaNac;
+    }
+
+    public void setFechaNac(String fechaNac) {
+        this.fechaNac = fechaNac;
+    }
+
+    public BigInteger getCapitalSocial() {
+        return capitalSocial;
+    }
+
+    public void setCapitalSocial(BigInteger capitalSocial) {
+        this.capitalSocial = capitalSocial;
+    }
+
+    public String getOLDpassword() {
+        return OLDpassword;
+    }
+
+    public void setOLDpassword(String OLDpassword) {
+        this.OLDpassword = OLDpassword;
+    }
+
 }

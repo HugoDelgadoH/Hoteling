@@ -10,11 +10,14 @@ import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -22,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author gohug
  */
-@Entity
+@Entity(name = "Usuario")
 @Table(name = "usuario")
 @XmlRootElement
 @NamedQueries({
@@ -38,11 +41,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuario.findByCapitalSocial", query = "SELECT u FROM Usuario u WHERE u.capitalSocial = :capitalSocial"),
     @NamedQuery(name = "Usuario.findByOtros", query = "SELECT u FROM Usuario u WHERE u.otros = :otros"),
     @NamedQuery(name = "Usuario.findByVerificado", query = "SELECT u FROM Usuario u WHERE u.verificado = :verificado"),
-    @NamedQuery(name = "Usuario.delete", query = "DELETE FROM Usuario u WHERE u.email = :email AND u.password = :password")})
+    @NamedQuery(name = "Usuario.delete", query = "DELETE FROM Usuario u WHERE u.email = :email")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Id
     @Basic(optional = false)
     @NotNull
@@ -226,5 +229,6 @@ public class Usuario implements Serializable {
     public String toString() {
         return "com.mycompany.hoteling.entities.Usuario[ email=" + email + " ]";
     }
+    
 
 }

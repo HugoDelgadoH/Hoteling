@@ -13,7 +13,7 @@
 
                 <div class="card product">
                     <h:form>
-                        <p:dataView value="#{hotelFacadeREST.findAll()}" var="product" rows="12" paginator="true"
+                        <p:dataView value="#{hotelFacadeREST.findAll()}" var="product" rows="6" paginator="true"
                                     rowsPerPageTemplate="6,12,16"
                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                     gridIcon="pi pi-th-large" listIcon="pi pi-bars">
@@ -22,16 +22,16 @@
                                 <div class="product-grid-item card border-1">
                                     <div class="product-grid-item-top">
                                         <div>
-                                            <i class="pi pi-tag product-category-icon"/>
+                                            <i class="pi pi-map-marker"/>
                                             <span class="product-category">#{product.ciudad}</span>
                                         </div>
-                                        <span class="product-badge">#{product.empresa}</span>
+                                        <span class="product-badge">#{perfilClientBean.getNombreByEmail(product.empresa)}</span>
                                     </div>
                                     <div class="product-grid-item-content">
                                         <p:graphicImage url="https://cdn.pixabay.com/photo/2021/08/25/20/42/field-6574455__480.jpg" library="demo" height="200" width="250"/>
                                         <div class="product-name">#{product.nombre}</div>
                                         <div class="product-description">#{product.servicios}</div>
-                                        <p:rating readonly="true" value="#{dataGridView.rating}"/>
+                                        <p:rating readonly="true" value="#{hotelClientBean.rating}"/>
                                     </div>
                                     <div class="product-grid-item-bottom">
                                         <h:outputText value="50€" styleClass="product-price"/>
@@ -45,13 +45,13 @@
                                     <div class="product-list-detail">
                                         <div class="product-name">#{product.nombre}</div>
                                         <div class="product-description">#{product.servicios}</div>
-                                        <p:rating readonly="true" value="#{dataGridView.rating}"/>
-                                        <i class="pi pi-tag product-category-icon"/><span
+                                        <p:rating readonly="true" value="#{hotelClientBean.rating}"/>
+                                        <i class="pi pi-map-marker"/><span
                                             class="product-category">#{product.ciudad}</span>
                                     </div>
                                     <div class="product-list-action">
                                         <h:outputText value="50€" styleClass="product-price"/>
-                                        <span class="product-badge">#{product.empresa}</span>
+                                        <span class="product-badge">#{perfilClientBean.getNombreByEmail(product.empresa)}</span>
                                     </div>
                                 </div>
                             </p:dataViewListItem>

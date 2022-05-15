@@ -29,7 +29,7 @@
                             <p:commandButton
                                 value="Registrar"
                                 action="index"
-                                actionListener="#{hotelClientBean.addHotel()}"/>
+                                actionListener="#{hotelClientBean.addHotel(loginView.authenticatedUser.email)}"/>
                         </p:panel>
                     </h:form>
                 </div>

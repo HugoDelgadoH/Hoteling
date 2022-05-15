@@ -37,7 +37,6 @@ public class HotelClientBean {
     WebTarget target;
 
     //Hotel hotel;
-
     @PersistenceContext
     EntityManager em;
 
@@ -52,9 +51,9 @@ public class HotelClientBean {
         client.close();
     }
 
-    public void addHotel() {
+    public void addHotel(String email) {
         Hotel h = new Hotel();
-        h.setEmpresa("Empresa logueada");//cambiar cuando sepamos el usuario
+        h.setEmpresa(email);
         h.setId(1);
         h.setNombre(bean.getNombre());
         h.setCiudad(bean.getCiudad());
@@ -65,11 +64,11 @@ public class HotelClientBean {
                 .post(Entity.entity(h, MediaType.APPLICATION_JSON));
     }
 
-    public List<Hotel> getHotelesEmpresa() {
+    public List<Hotel> getHotelesEmpresa(String email) {
         try {
             return em.createNamedQuery("Hotel.findByEmpresa",
                     Hotel.class)
-                    .setParameter("empresa", "Empresa logueada")//cambiar por empresa
+                    .setParameter("empresa", email)
                     .getResultList();
 
         } catch (NoResultException e) {
@@ -91,5 +90,24 @@ public class HotelClientBean {
                 .resolveTemplate("hotelId", bean.getId())
                 .request(MediaType.APPLICATION_JSON)
                 .get(Hotel.class);
+    }
+
+    public void editHotel() {
+        Hotel h = new Hotel();
+        h.setEmpresa(bean.getEmpresa());
+        h.setId(bean.getId());
+        h.setNombre(bean.getNombre());
+        h.setCiudad(bean.getCiudad());
+        h.setNumeroHab(bean.getNumeroHab());
+        h.setServicios(bean.getServicios());
+        target.path("{id}")
+                .resolveTemplate("id", bean.getId())
+                .request()
+                .put(Entity.entity(h, MediaType.APPLICATION_JSON));
+                
+    }
+    
+    public int getRating(){
+        return 4;
     }
 }

@@ -11,27 +11,30 @@
 
             <ui:define name="content">
                 <h:form>
-                    <h2><h:outputText value="Información de perfil #{perfilClientBean.getUsuarioForBack(loginView.authenticatedUser.email)}"/></h2>
-                    <p:panelGrid id="infoPerfil" columns="3">
-                        <h:outputText value="Nombre de Usuario: "/>
-                        <h:inputText id="nombre" value="#{perfilBackingBean.nombre}" required="false" disabled="#{utiles.disabled}"/>
-                        <p:commandButton value="Editar" actionListener="#{utiles.action}" update="nombre"/>
-                        <h:outputText value="Email: "/>
-                        <h:inputText id="email" value="#{perfilBackingBean.email}" required="false" disabled="#{utiles.disabled}"/>
-                        <p:commandButton value="Editar" actionListener="#{utiles.action}" update="email"/>
-                        <h:outputText value="Fecha Nacimiento: "/>
-                        <h:inputText id="fecha" value="#{perfilBackingBean.fecha_nac}" required="false" disabled="#{utiles.disabled}"/>
-                        <p:commandButton value="Editar" actionListener="#{utiles.action}" update="fecha"/>
-                        <h:outputText value="Teléfono: "/>
-                        <h:inputText id="tlf" value="#{perfilBackingBean.telefono}" required="false" disabled="#{utiles.disabled}"/>
-                        <p:commandButton value="Editar" actionListener="#{utiles.action}" update="tlf"/>
-                        <h:outputText value="DNI: "/>
-                        <h:inputText id="dni" value="#{perfilBackingBean.dni}" required="false" disabled="#{utiles.disabled}"/>
-                        <p:commandButton value="Editar" actionListener="#{utiles.action}" update="dni"/>
-                    </p:panelGrid>
-                    <p:commandButton value="Aplicar Cambios" action="./index.xhtml" actionListener="#{perfilClientBean.modificaUser()}"/>
+                    <p:panel header="Información de perfil #{perfilClientBean.getUsuarioForBack(loginView.authenticatedUser.email)}">
+                        <p:panelGrid id="infoPerfil" columns="3">
+                            <h:outputText value="Nombre de Usuario: "/>
+                            <h:inputText id="nombre" value="#{perfilBackingBean.nombre}" required="false" disabled="#{utiles.disabled}"/>
+                            <p:commandButton value="Editar" actionListener="#{utiles.action}" update="nombre"/>
+                            <h:outputText value="Email: "/>
+                            <h:inputText id="email" value="#{perfilBackingBean.email}" required="false" disabled="#{utiles.disabled}"/>
+                            <p:commandButton value="Editar" actionListener="#{utiles.action}" update="email"/>
+                            <h:outputText value="Fecha Nacimiento: "/>
+                            <h:inputText id="fecha" value="#{perfilBackingBean.fechaNac}" required="false" disabled="#{utiles.disabled}"/>
+                            <p:commandButton value="Editar" actionListener="#{utiles.action}" update="fecha"/>
+                            <h:outputText value="Teléfono: "/>
+                            <h:inputText id="tlf" value="#{perfilBackingBean.telefono}" required="false" disabled="#{utiles.disabled}"/>
+                            <p:commandButton value="Editar" actionListener="#{utiles.action}" update="tlf"/>
+                            <h:outputText value="DNI: "/>
+                            <h:inputText id="dni" value="#{perfilBackingBean.dni}" required="false" disabled="#{utiles.disabled}"/>
+                            <p:commandButton value="Editar" actionListener="#{utiles.action}" update="dni"/>
+                        </p:panelGrid>
+                        <br/>
+                        <p:commandButton value="Aplicar Cambios" action="./index.xhtml" actionListener="#{perfilClientBean.modificaUser()}" icon="pi pi-pencil"/>
+                    </p:panel>
+                    <p:link outcome="cambiarPW" value="Cambiar contraseña"/>
                     <br/><br/>
-                    <p:commandButton value="Borrar Cuenta" action="/index" actionListener="#{perfilClientBean.deleteUser()}"/>
+                    <p:commandButton value="Borrar Cuenta" action="#{loginView.logout()}" actionListener="#{perfilClientBean.borrarUser(loginView.authenticatedUser.email)}"/>
                 </h:form>
             </ui:define>
 

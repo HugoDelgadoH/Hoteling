@@ -15,7 +15,7 @@
                 <h:form>
                     <p:panel id="panel" header="Seleccione un Hotel" styleClass="p-mb-3">
                         <h:selectOneRadio value="#{hotelBackingBean.id}" required="true" layout="pageDirection">
-                            <c:forEach items="#{hotelClientBean.hotelesEmpresa}" var="m">
+                            <c:forEach items="#{hotelClientBean.getHotelesEmpresa((loginView.authenticatedUser.email))}" var="m">
                                 <f:selectItem itemValue="#{m.id.intValue()}" itemLabel="#{m.nombre}, #{m.ciudad}"/>
                             </c:forEach>
                         </h:selectOneRadio>

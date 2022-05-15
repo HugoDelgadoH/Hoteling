@@ -14,6 +14,12 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
+import javax.transaction.UserTransaction;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -25,17 +31,19 @@ import javax.ws.rs.client.WebTarget;
 @Named
 @RequestScoped
 public class PerfilClientBean {
-    
+
+    @Inject
+    UserTransaction ut;
+
     @Inject
     PerfilBackingBean bean;
-     /*Client client;
-    WebTarget target;*/
-    
+    Client client;
+    WebTarget target;
+
     @PersistenceContext
     EntityManager em;
-    
 
-    /*@PostConstruct
+    @PostConstruct
     public void init() {
         client = ClientBuilder.newClient();
         target = client.target("http://localhost:8080/hoteling/webresources/com.mycompany.hoteling.entities.usuario");
@@ -44,50 +52,72 @@ public class PerfilClientBean {
     @PreDestroy
     public void destroy() {
         client.close();
-    }*/
-    
+    }
+
     public Usuario getUserByEmail(String email) {
         try {
             return em.createNamedQuery("Usuario.findByEmail",
                     Usuario.class)
                     .setParameter("email", email)
                     .getSingleResult();
-            
+
         } catch (NoResultException e) {
             return null;
         }
     }
-    
+
     public void deleteUser(String email) {
-        em.createNamedQuery("Usuario.delete",
-                Usuario.class)
-                .setParameter("email", email)
-                .setParameter("password", "1234");//No funciona por usar em
+        target.path("email")
+                .resolveTemplate("email", email)
+                .request()
+                .delete();
     }
-    
-    public Usuario getUsuarioForBack(String email) {
+
+    public String getUsuarioForBack(String email) {
         try {
             Usuario u = em.createNamedQuery("Usuario.findByEmail",
                     Usuario.class)
                     .setParameter("email", email)
                     .getSingleResult();
-            
+
             bean.setEmail(u.getEmail());
             bean.setDni(u.getDni());
-            bean.setFecha_nac(u.getFechaNacimiento());
+            bean.setFechaNac(u.getFechaNacimiento());
             bean.setNombre(u.getNombre());
             bean.setTelefono(u.getTelefono());
             bean.setDni(u.getDni());
-            
-            return u;
-            
+            bean.setCif(u.getCif());
+            bean.setCapitalSocial(u.getCapitalSocial());
+            bean.setDomicilio(u.getDomicilio());
+            bean.setOtros(u.getOtros());
+            //bean.setVerificado(u.getVerificado());
+
+            return u.getNombre();
+
         } catch (NoResultException e) {
             return null;
         }
     }
-    
-    public void modificaUser(){
-        
+
+    public void modificaUser() {
+
     }
-    
+
+    public void borrarUser(String email) throws NotSupportedException, SystemException, RollbackException, HeuristicMixedException, HeuristicRollbackException {
+        ut.begin();
+        em.joinTransaction();
+        em.createNamedQuery("Usuario.delete", Usuario.class)
+                .setParameter("email", email)
+                .executeUpdate();
+        ut.commit();
+    }
+
+    public String getNombreByEmail(String email) {
+        return em.createNamedQuery("Usuario.findByEmail",
+                Usuario.class)
+                .setParameter("email", email)
+                .getSingleResult()
+                .getNombre();
+    }
+
 }

@@ -37,6 +37,7 @@ public class ApplicationConfig extends Application {
         resources.add(com.mycompany.hoteling.rest.HabitacionFacadeREST.class);
         resources.add(com.mycompany.hoteling.rest.HotelFacadeREST.class);
         resources.add(com.mycompany.hoteling.rest.ReservaFacadeREST.class);
+        resources.add(com.mycompany.hoteling.rest.UsuarioREST.class);
     }
     
 }
