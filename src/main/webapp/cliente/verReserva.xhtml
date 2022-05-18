@@ -11,7 +11,7 @@
 
             <ui:define name="content">
                 <h:form>
-                    <h2><h:outputText value="Información de la reserva #{reservaClientBean.reserva.id}"/></h2>
+                    <p:panel class="panel" header="Información de la reserva #{reservaClientBean.reserva.id}" styleClass="p-mb-3">
                     <p:panelGrid id="info" columns="2">
                         <h:outputText value="Hotel: "/>
                         <h:outputText value="#{reservaClientBean.getHotetById(reservaClientBean.reserva.hotel)}"/>
@@ -22,6 +22,7 @@
                         <h:outputText value="Precio: "/>
                         <h:outputText value="50€"/>
                     </p:panelGrid>
+                        </p:panel>
                     <p:commandButton value="Back" action="verReservas" icon="ui-icon-arrowrefresh-1-w"/>
                     <p:commandButton value="Cancelar" action="verReservas" actionListener="#{reservaClientBean.deleteReserva()}"/>
                 </h:form>

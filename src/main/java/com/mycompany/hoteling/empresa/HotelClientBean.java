@@ -36,7 +36,6 @@ public class HotelClientBean {
     Client client;
     WebTarget target;
 
-    //Hotel hotel;
     @PersistenceContext
     EntityManager em;
 
@@ -84,30 +83,35 @@ public class HotelClientBean {
     }
 
     public Hotel getHotel() {
-        return target
+        Hotel h = target
                 .register(HotelReader.class)
                 .path("{hotelId}")
                 .resolveTemplate("hotelId", bean.getId())
                 .request(MediaType.APPLICATION_JSON)
                 .get(Hotel.class);
+        
+        bean.setEmpresa(h.getEmpresa());
+        bean.setCiudad(h.getCiudad());
+        bean.setNombre(h.getNombre());
+        bean.setNumeroHab(h.getNumeroHab());
+        bean.setServicios(h.getServicios());
+        bean.setId(h.getId());
+        
+        return h;
     }
 
-    public void editHotel() {
-        Hotel h = new Hotel();
-        h.setEmpresa(bean.getEmpresa());
-        h.setId(bean.getId());
-        h.setNombre(bean.getNombre());
-        h.setCiudad(bean.getCiudad());
-        h.setNumeroHab(bean.getNumeroHab());
-        h.setServicios(bean.getServicios());
+    public String editHotel() {
+        Hotel h = new Hotel(bean.getId(), bean.getEmpresa(), bean.getNombre(), bean.getCiudad(), bean.getNumeroHab(), bean.getServicios());
         target.path("{id}")
+                .register(HotelWriter.class)
                 .resolveTemplate("id", bean.getId())
                 .request()
                 .put(Entity.entity(h, MediaType.APPLICATION_JSON));
-                
+
+        return "verHoteles";
     }
-    
-    public int getRating(){
+
+    public int getRating() {
         return 4;
     }
 }

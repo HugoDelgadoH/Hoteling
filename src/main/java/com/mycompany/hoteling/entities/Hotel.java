@@ -62,9 +62,9 @@ public class Hotel implements Serializable {
     @NotNull
     @Column(name = "numero_hab")
     private int numeroHab;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 510)
+    //@Basic(optional = false)
+    //@NotNull
+    @Size(min = 0, max = 510)
     @Column(name = "servicios")
     private String servicios;
 

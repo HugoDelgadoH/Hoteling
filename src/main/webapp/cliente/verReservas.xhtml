@@ -14,7 +14,7 @@
             <ui:define name="content">
                 <h:form>
                     <h:selectOneRadio value="#{reservaBackingBean.reservaId}" required="true" layout="pageDirection">
-                        <c:forEach items="#{reservaClientBean.reservas}" var="m">
+                        <c:forEach items="#{reservaClientBean.getReservasUsuario(loginView.authenticatedUser.email)}" var="m">
                             <f:selectItem itemValue="#{m.id}" itemLabel="#{reservaClientBean.getHotetById(m.hotel)}"/>
                         </c:forEach>
                     </h:selectOneRadio>

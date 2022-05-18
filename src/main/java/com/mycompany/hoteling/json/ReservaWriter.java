@@ -41,7 +41,7 @@ public class ReservaWriter implements MessageBodyWriter<Reserva> {
     public void writeTo(Reserva t, Class<?> type, Type type1, Annotation[] antns, MediaType mt, MultivaluedMap<String, Object> mm, OutputStream out) throws IOException, WebApplicationException {
         JsonGenerator gen = Json.createGenerator(out);
         gen.writeStartObject()
-                .write("cliente", "user@gmail.com")
+                .write("cliente", t.getCliente())
                 .write("hotel", t.getHotel())
                 .write("fecha_ini", t.getFechaIni())
                 .write("fecha_fin", t.getFechaFin())

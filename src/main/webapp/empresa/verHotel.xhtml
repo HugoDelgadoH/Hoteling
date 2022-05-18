@@ -12,16 +12,32 @@
             <ui:define name="content">
                 <h:form>
                     <p:panel id="panel" header="Información de #{hotelClientBean.hotel.nombre}" styleClass="p-mb-3">
-                        <p:panelGrid id="info" columns="2">
-                            <h:outputText value="Ciudad: "/>
-                            <h:outputText value="#{hotelClientBean.hotel.ciudad}"/>
-                            <h:outputText value="Numero de Habitaciones: "/>
-                            <h:outputText value="#{hotelClientBean.hotel.numeroHab}"/>
-                            <h:outputText value="Precio: "/>
-                            <h:outputText value="50€"/>
-                            <h:outputText value="Servicios: "/>
-                            <h:outputText value="#{hotelClientBean.hotel.servicios}"/>
+                        <p:panelGrid id="info" columns="3">
+                            <p:outputLabel value="Nombre: "/>
+                            <p:inplace>
+                                <p:inputText id="nom" value="#{hotelBackingBean.nombre}" required="true"/>
+                            </p:inplace>
+                            <p:message for="nom"/>
+                            <p:outputLabel value="Ciudad: "/>
+                            <p:inplace>
+                                <p:inputText id="ciu" value="#{hotelBackingBean.ciudad}"/>
+                            </p:inplace>
+                            <p:message for="ciu"/>                        
+                            <p:outputLabel value="Numero de Habitaciones: "/>
+                            <p:inplace>
+                                <p:inputNumber id="num" value="#{hotelBackingBean.numeroHab}"/>
+                            </p:inplace>
+                            <p:message for="num"/>
+                            <p:outputLabel value="Precio: "/>
+                            <p:outputLabel id="prec" value="50€"/>
+                            <p:message for="prec"/>
+                            <p:outputLabel value="Servicios: "/>
+                            <p:inplace>
+                                <p:inputText id="ser" value="#{hotelBackingBean.servicios}"/>
+                            </p:inplace>
+                            <p:message for="ser"/>
                         </p:panelGrid>
+                        <p:commandButton value="Aplicar Cambios" action="#{hotelClientBean.editHotel()}" icon="pi pi-pencil"/>
                     </p:panel>
                     <p:commandButton value="Back" action="verHoteles" icon="ui-icon-arrowrefresh-1-w"/>
                     <p:commandButton value="Eliminar" action="verHoteles" actionListener="#{hotelClientBean.deleteHotel()}"/>

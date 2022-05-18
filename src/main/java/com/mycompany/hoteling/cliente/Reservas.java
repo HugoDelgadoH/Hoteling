@@ -7,8 +7,10 @@ package com.mycompany.hoteling.cliente;
 
 import com.mycompany.hoteling.entities.Hotel;
 import com.mycompany.hoteling.entities.Reserva;
+import com.mycompany.hoteling.entities.Tarjeta;
 import com.mycompany.hoteling.json.ReservaReader;
 import com.mycompany.hoteling.json.ReservaWriter;
+import com.mycompany.hoteling.json.TarjetaReader;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -49,6 +51,7 @@ public class Reservas implements Serializable {
     private SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
     Client client;
     WebTarget target;
+    WebTarget targetValdavia;
 
     @PersistenceContext
     EntityManager em;
@@ -57,6 +60,7 @@ public class Reservas implements Serializable {
     public void init() {
         client = ClientBuilder.newClient();
         target = client.target("http://localhost:8080/hoteling/webresources/com.mycompany.hoteling.entities.reserva");
+        targetValdavia = client.target("http://valdavia.infor.uva.es:8080/hoteling/webresources/tarjetas");
     }
 
     public String getCiudad() {
@@ -158,6 +162,10 @@ public class Reservas implements Serializable {
     public String getTarjeta() {
         return tarjeta;
     }
+    
+    public String getTarjetaValdavia(){
+        return this.tarjeta.replace("-", "");
+    }
 
     public void setTarjeta(String tarjeta) {
         this.tarjeta = tarjeta;
@@ -193,9 +201,9 @@ public class Reservas implements Serializable {
         this.id = id;
     }
 
-    public void addReserva() {
+    public void addReserva(String email) {
         Reserva h = new Reserva();
-        h.setCliente("user@gmail.com");//cambiar cuando sepamos el usuario
+        h.setCliente(email);
         h.setHotel(this.hotelId);
         h.setFechaIni(getFechaInicioString());
         h.setFechaFin(getFechaFinString());
@@ -213,6 +221,17 @@ public class Reservas implements Serializable {
                 .resolveTemplate("id", this.id) //De donde sale el nombre de este id
                 .request(MediaType.APPLICATION_JSON)
                 .get(Reserva.class);
+    }
+
+    public boolean checkTarjeta() {
+        Tarjeta t;
+        t = targetValdavia.register(TarjetaReader.class)
+                .path("{id}")
+                .resolveTemplate("id", getTarjetaValdavia())
+                .request(MediaType.APPLICATION_JSON)
+                .get(Tarjeta.class);
+
+        return !(t==null || t.getAutorizada().equals("no"));
     }
 
 }

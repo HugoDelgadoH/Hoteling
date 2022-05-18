@@ -9,6 +9,7 @@ import com.mycompany.hoteling.entities.Hotel;
 import com.mycompany.hoteling.entities.Reserva;
 import com.mycompany.hoteling.json.HotelReader;
 import com.mycompany.hoteling.json.ReservaReader;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
@@ -103,5 +104,11 @@ public class ReservaClientBean {
                 .resolveTemplate("reservaId", bean.getReservaId())
                 .request()
                 .delete();
+    }
+    
+    public List<Reserva> getReservasUsuario(String email){
+        return em.createNamedQuery("Reserva.findByCliente",Reserva.class)
+                .setParameter("cliente", email)
+                .getResultList();
     }
 }

@@ -46,7 +46,7 @@ public class HotelFacadeREST extends AbstractFacade<Hotel> {
 
     @PUT
     @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Integer id, Hotel entity) {
         super.edit(entity);
     }

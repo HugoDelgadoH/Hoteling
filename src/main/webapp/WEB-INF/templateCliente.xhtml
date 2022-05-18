@@ -69,6 +69,9 @@
                             <p:menuitem value="Reservar" action="reserva" icon="ui-icon-calendar"/>
                             <p:menuitem value="Ver Reservas" action="/cliente/verReservas.xhtml" icon="ui-icon-search"/>
                         </p:submenu>
+                        <p:submenu label ="CHAT" rendered="#{request.isUserInRole('cliente')}">
+                            <p:menuitem value="Chat" outcome="/chat/chatroom.xhtml"/>
+                        </p:submenu>
                         <p:submenu label ="EMPRESA" rendered="#{request.isUserInRole('empresa')}">
                             <p:menuitem value="Añadir" action="/empresa/addHotel.xhtml" icon="ui-icon-plusthick"/>
                             <p:menuitem value="Ver Hoteles" action="/empresa/verHoteles.xhtml" icon="ui-icon-search"/>

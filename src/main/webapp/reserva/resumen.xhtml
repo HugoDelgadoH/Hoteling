@@ -20,6 +20,7 @@
                             <p:menuitem value="Confirmación"/>
                         </p:steps>
                     </div>
+                    <h1>#{reservas.checkTarjeta()}</h1>
                     <p:panelGrid id="print" columns ="1">
                         <p:panelGrid id="info" columns="6">
                             <h:outputText value="Hotel: #{reservas.hotel}"/>
@@ -41,7 +42,7 @@
                         </p:panelGrid>
                     </p:panelGrid>
                     <p:commandButton id="back" value="Back" action="tarjeta"/>
-                    <p:commandButton id="home" value="Terminar" action="home" actionListener="#{reservas.addReserva()}" icon="ui-icon-home"/>
+                    <p:commandButton id="home" value="Terminar" action="home" actionListener="#{reservas.addReserva(loginView.authenticatedUser.email)}" icon="ui-icon-home"/>
                 </h:form>   
 
             </ui:define>

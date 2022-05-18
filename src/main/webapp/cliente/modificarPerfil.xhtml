@@ -14,20 +14,30 @@
                     <p:panel header="Información de perfil #{perfilClientBean.getUsuarioForBack(loginView.authenticatedUser.email)}">
                         <p:panelGrid id="infoPerfil" columns="3">
                             <h:outputText value="Nombre de Usuario: "/>
-                            <h:inputText id="nombre" value="#{perfilBackingBean.nombre}" required="false" disabled="#{utiles.disabled}"/>
-                            <p:commandButton value="Editar" actionListener="#{utiles.action}" update="nombre"/>
+                            <p:inplace>
+                                <h:inputText id="nombre" value="#{perfilBackingBean.nombre}" required="true"/>
+                            </p:inplace>
+                            <p:message for="nombre"/>
                             <h:outputText value="Email: "/>
-                            <h:inputText id="email" value="#{perfilBackingBean.email}" required="false" disabled="#{utiles.disabled}"/>
-                            <p:commandButton value="Editar" actionListener="#{utiles.action}" update="email"/>
+                            <p:inplace>
+                                <h:inputText id="email" value="#{perfilBackingBean.email}" required="true"/>
+                            </p:inplace>
+                            <p:message for="email"/>
                             <h:outputText value="Fecha Nacimiento: "/>
-                            <h:inputText id="fecha" value="#{perfilBackingBean.fechaNac}" required="false" disabled="#{utiles.disabled}"/>
-                            <p:commandButton value="Editar" actionListener="#{utiles.action}" update="fecha"/>
+                            <p:inplace>
+                                <h:inputText id="fecha" value="#{perfilBackingBean.fechaNac}" required="true"/>
+                            </p:inplace>
+                            <p:message for="fecha"/>
                             <h:outputText value="Teléfono: "/>
-                            <h:inputText id="tlf" value="#{perfilBackingBean.telefono}" required="false" disabled="#{utiles.disabled}"/>
-                            <p:commandButton value="Editar" actionListener="#{utiles.action}" update="tlf"/>
+                            <p:inplace>
+                                <h:inputText id="tlf" value="#{perfilBackingBean.telefono}" required="true"/>
+                            </p:inplace>
+                            <p:message for="tlf"/>
                             <h:outputText value="DNI: "/>
-                            <h:inputText id="dni" value="#{perfilBackingBean.dni}" required="false" disabled="#{utiles.disabled}"/>
-                            <p:commandButton value="Editar" actionListener="#{utiles.action}" update="dni"/>
+                            <p:inplace>
+                                <h:inputText id="dni" value="#{perfilBackingBean.dni}" required="true"/>
+                            </p:inplace>
+                            <p:message for="dni"/>
                         </p:panelGrid>
                         <br/>
                         <p:commandButton value="Aplicar Cambios" action="./index.xhtml" actionListener="#{perfilClientBean.modificaUser()}" icon="pi pi-pencil"/>
