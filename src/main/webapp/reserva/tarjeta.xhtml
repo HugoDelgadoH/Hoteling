@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -11,6 +12,7 @@
 
             <ui:define name="content">
                 <h:form prependId="false">
+                    <f:event listener="#{reservas.validaTarjeta}" type="postValidate" />
                     <div class="steps">
                         <p:steps activeIndex="2">
                             <p:menuitem value="Elige Hotel"/>
@@ -35,7 +37,7 @@
                         </h:panelGrid>
                     </p:panel> 
                     <p:commandButton id="back" value="Back" action="selectHora"/>
-                    <p:commandButton id="next" value="Next" action="resumen"/>
+                    <p:commandButton id="next" value="Next" action="resumen" update="gridTarjeta"/>
                 </h:form>
             </ui:define>
 

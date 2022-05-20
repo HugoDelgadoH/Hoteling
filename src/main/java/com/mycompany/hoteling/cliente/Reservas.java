@@ -15,9 +15,16 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 import javax.faces.flow.FlowScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -162,9 +169,9 @@ public class Reservas implements Serializable {
     public String getTarjeta() {
         return tarjeta;
     }
-    
-    public String getTarjetaValdavia(){
-        return this.tarjeta.replace("-", "");
+
+    public String tarjetaValdavia(String t) {
+        return t.replace("-", "");
     }
 
     public void setTarjeta(String tarjeta) {
@@ -223,15 +230,58 @@ public class Reservas implements Serializable {
                 .get(Reserva.class);
     }
 
-    public boolean checkTarjeta() {
+    public boolean checkTarjeta(String tarjeta) {
         Tarjeta t;
         t = targetValdavia.register(TarjetaReader.class)
                 .path("{id}")
-                .resolveTemplate("id", getTarjetaValdavia())
+                .resolveTemplate("id", tarjeta)
                 .request(MediaType.APPLICATION_JSON)
                 .get(Tarjeta.class);
 
-        return !(t==null || t.getAutorizada().equals("no"));
+        return !(t == null || t.getAutorizada().equals("no"));
     }
 
+    public void validaFechas(ComponentSystemEvent event) throws ParseException {
+        //feha de hoy
+        Date hoy = new Date(System.currentTimeMillis());
+
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        UIComponent components = event.getComponent();
+        UIInput uiInputFechaI = (UIInput) components.findComponent("fechaIn");
+        Date fechaI = (Date) (uiInputFechaI.getLocalValue() == null ? "" : uiInputFechaI.getLocalValue());
+        UIInput uiInputFechaF = (UIInput) components.findComponent("fechaF");
+        Date fechaF = (Date) (uiInputFechaF.getLocalValue() == null ? "" : uiInputFechaF.getLocalValue());
+
+        if (fechaI == null || fechaF == null) {
+            return;
+        }
+        //fecha anterior a la de el dia actual
+        if (fechaI.before(hoy)) {
+            FacesMessage msg = new FacesMessage("La fecha de llegada no puede ser anterior o igual a hoy");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            facesContext.addMessage(uiInputFechaI.getClientId(), msg);
+            facesContext.renderResponse();
+        }
+        //fecha fin anterior a inicio
+        if (fechaF.before(fechaI) || fechaF.equals(fechaI)) {
+            FacesMessage msg = new FacesMessage("La fecha de salida no puede ser anterior o igual a la de llegada");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            facesContext.addMessage(uiInputFechaF.getClientId(), msg);
+            facesContext.renderResponse();
+        }
+    }
+
+    public void validaTarjeta(ComponentSystemEvent event) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        UIComponent components = event.getComponent();
+        UIInput uiInputTarjeta = (UIInput) components.findComponent("tarjeta");
+        String tarjetaIn = uiInputTarjeta.getLocalValue() == null ? "" : uiInputTarjeta.getLocalValue().toString();
+
+        if (!checkTarjeta(tarjetaValdavia(tarjetaIn))) {
+            FacesMessage msg = new FacesMessage("La tarjeta no es válida");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            facesContext.addMessage(uiInputTarjeta.getClientId(), msg);
+            facesContext.renderResponse();
+        }
+    }
 }
