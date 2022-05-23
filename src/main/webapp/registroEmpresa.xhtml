@@ -12,7 +12,7 @@
 
             <ui:define name="content">
                 <h:form>
-                    <f:event listener="#{registerView.validatePassword}" type="postValidate" />
+                    <f:event listener="#{registerView.validaRegistroEmpresa}" type="postValidate" />
                     <p:panel header="Crear una cuenta de Empresa">
                         <h:panelGrid id="grid" columns="3">
                             <h:outputLabel for="name" value="Nombre de Empresa:" style="font-weight:bold"/>

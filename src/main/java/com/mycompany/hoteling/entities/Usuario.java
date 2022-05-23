@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Id
     @Basic(optional = false)
     @NotNull
@@ -111,10 +111,24 @@ public class Usuario implements Serializable {
         this.email = email;
         this.nombre = nombre;
         this.password = password;
-        this.cif=cif;
-        this.domicilio=domicilio;
-        this.capitalSocial=capitalSocial;
-        this.otros=otros;
+        this.cif = cif;
+        this.domicilio = domicilio;
+        this.capitalSocial = capitalSocial;
+        this.otros = otros;
+    }
+
+    public Usuario(String email, String nombre, String password, String dni, String telefono, String fecha_nac, String cif, String domicilio, BigInteger capitalSocial, String otros, Short verificado) {
+        this.email = email;
+        this.nombre = nombre;
+        this.password = password;
+        this.dni = dni;
+        this.telefono = telefono;
+        this.fechaNacimiento = fecha_nac;
+        this.cif = cif;
+        this.domicilio = domicilio;
+        this.capitalSocial = capitalSocial;
+        this.otros = otros;
+        this.verificado=verificado;
     }
 
     public String getEmail() {
@@ -229,6 +243,5 @@ public class Usuario implements Serializable {
     public String toString() {
         return "com.mycompany.hoteling.entities.Usuario[ email=" + email + " ]";
     }
-    
 
 }

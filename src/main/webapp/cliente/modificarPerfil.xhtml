@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -11,40 +12,45 @@
 
             <ui:define name="content">
                 <h:form>
+                    <f:event listener="#{perfilClientBean.validaPerfilCliente}" type="postValidate" />
                     <p:panel header="Información de perfil #{perfilClientBean.getUsuarioForBack(loginView.authenticatedUser.email)}">
                         <p:panelGrid id="infoPerfil" columns="3">
-                            <h:outputText value="Nombre de Usuario: "/>
+                            <h:outputLabel for="nombre" value="Nombre de Usuario: "/>
                             <p:inplace>
                                 <h:inputText id="nombre" value="#{perfilBackingBean.nombre}" required="true"/>
                             </p:inplace>
                             <p:message for="nombre"/>
-                            <h:outputText value="Email: "/>
+                            <h:outputLabel for="email" value="Email: "/>
                             <p:inplace>
                                 <h:inputText id="email" value="#{perfilBackingBean.email}" required="true"/>
                             </p:inplace>
                             <p:message for="email"/>
-                            <h:outputText value="Fecha Nacimiento: "/>
-                            <p:inplace>
-                                <h:inputText id="fecha" value="#{perfilBackingBean.fechaNac}" required="true"/>
-                            </p:inplace>
+                            <p:outputLabel for="fecha" value="Fecha Nacimiento: "/>
+                            <p:datePicker id="fecha" value="#{perfilBackingBean.fechaNac}" pattern="dd/MM/yyyy" locale="es" monthNavigator="true" yearNavigator="true" yearRange="1950:2004"/>
                             <p:message for="fecha"/>
-                            <h:outputText value="Teléfono: "/>
+                            <h:outputLabel for="tlf" value="Teléfono: "/>
                             <p:inplace>
                                 <h:inputText id="tlf" value="#{perfilBackingBean.telefono}" required="true"/>
                             </p:inplace>
                             <p:message for="tlf"/>
-                            <h:outputText value="DNI: "/>
+                            <h:outputLabel for="dni" value="DNI: "/>
                             <p:inplace>
                                 <h:inputText id="dni" value="#{perfilBackingBean.dni}" required="true"/>
                             </p:inplace>
                             <p:message for="dni"/>
                         </p:panelGrid>
                         <br/>
-                        <p:commandButton value="Aplicar Cambios" action="./index.xhtml" actionListener="#{perfilClientBean.modificaUser()}" icon="pi pi-pencil"/>
+                        <p:commandButton value="Aplicar Cambios" action="#{perfilClientBean.modificaUser(loginView.authenticatedUser.email)}" icon="pi pi-pencil" update="infoPerfil"/>
                     </p:panel>
                     <p:link outcome="cambiarPW" value="Cambiar contraseña"/>
                     <br/><br/>
-                    <p:commandButton value="Borrar Cuenta" action="#{loginView.logout()}" actionListener="#{perfilClientBean.borrarUser(loginView.authenticatedUser.email)}"/>
+                    <p:commandButton value="Borrar Cuenta" action="#{loginView.logout()}" actionListener="#{perfilClientBean.borrarUser(loginView.authenticatedUser.email)}">
+                        <p:confirm header="Confirmar" message="¿Eliminar cuenta?" icon="pi pi-exclamation-triangle"/>
+                    </p:commandButton>
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"/>
+                    </p:confirmDialog>
                 </h:form>
             </ui:define>
 

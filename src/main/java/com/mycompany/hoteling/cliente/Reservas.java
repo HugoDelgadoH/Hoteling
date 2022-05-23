@@ -15,8 +15,6 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -225,7 +223,7 @@ public class Reservas implements Serializable {
         return target
                 .register(ReservaReader.class)
                 .path("{id}")
-                .resolveTemplate("id", this.id) //De donde sale el nombre de este id
+                .resolveTemplate("id", this.id)
                 .request(MediaType.APPLICATION_JSON)
                 .get(Reserva.class);
     }
@@ -276,6 +274,11 @@ public class Reservas implements Serializable {
         UIComponent components = event.getComponent();
         UIInput uiInputTarjeta = (UIInput) components.findComponent("tarjeta");
         String tarjetaIn = uiInputTarjeta.getLocalValue() == null ? "" : uiInputTarjeta.getLocalValue().toString();
+        UIInput uiInputFecha = (UIInput) components.findComponent("fecha");
+        Date tarjetaFecha = (Date) (uiInputFecha.getLocalValue() == null ? "" : uiInputFecha.getLocalValue());
+
+        //feha de hoy
+        Date hoy = new Date(System.currentTimeMillis());
 
         if (!checkTarjeta(tarjetaValdavia(tarjetaIn))) {
             FacesMessage msg = new FacesMessage("La tarjeta no es válida");
@@ -283,5 +286,13 @@ public class Reservas implements Serializable {
             facesContext.addMessage(uiInputTarjeta.getClientId(), msg);
             facesContext.renderResponse();
         }
+        
+        if(tarjetaFecha.before(hoy)){
+            FacesMessage msg = new FacesMessage("La tarjeta está caducada");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            facesContext.addMessage(uiInputFecha.getClientId(), msg);
+            facesContext.renderResponse();            
+        }
+
     }
 }

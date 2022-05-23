@@ -7,6 +7,10 @@ package com.mycompany.hoteling.cliente;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
@@ -18,19 +22,19 @@ import javax.inject.Named;
 @SessionScoped
 public class PerfilBackingBean implements Serializable {
 
-    String nombre;
-    String email;
-    String password;
-    String NEWpassword;
-    String OLDpassword;
-    String dni;
-    String telefono;
-    String fechaNac;
-    String cif;
-    String domicilio;
-    BigInteger capitalSocial;
-    String otros;
-    int verificado;
+    private String nombre;
+    private String email;
+    private String password;
+    private String NEWpassword;
+    private String OLDpassword;
+    private String dni = "";
+    private String telefono = "";
+    private Date fechaNac;
+    private String cif = "";
+    private String domicilio = "";
+    private BigInteger capitalSocial;
+    private String otros = "";
+    private int verificado;
 
     public String getNombre() {
         return nombre;
@@ -112,12 +116,26 @@ public class PerfilBackingBean implements Serializable {
         this.NEWpassword = NEWpassword;
     }
 
-    public String getFechaNac() {
+    public Date getFechaNac() {
         return fechaNac;
     }
 
-    public void setFechaNac(String fechaNac) {
+    public void setFechaNac(Date fechaNac) {
         this.fechaNac = fechaNac;
+    }
+
+    public String getFechaNacString() {
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String d = formatter.format(this.fechaNac);
+        return d;
+    }
+
+    public void setFechaNacString(String f) throws ParseException {
+        if (f != null) {
+            this.fechaNac = new SimpleDateFormat("dd/MM/yyyy").parse(f);
+        } else {
+            this.fechaNac = null;
+        }
     }
 
     public BigInteger getCapitalSocial() {
