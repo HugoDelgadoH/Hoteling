@@ -90,4 +90,13 @@ public class HotelFacadeREST extends AbstractFacade<Hotel> {
         return em;
     }
     
+    @GET
+    @Path("byEmpresa/{empresa}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Hotel> findByEmpresa(@PathParam("empresa") String email) {
+        return em.createNamedQuery("Hotel.findByEmpresa",Hotel.class)
+                .setParameter("empresa", email)
+                .getResultList();
+    }
+    
 }

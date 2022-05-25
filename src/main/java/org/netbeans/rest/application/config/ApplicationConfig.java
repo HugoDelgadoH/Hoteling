@@ -31,9 +31,11 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(com.mycompany.hoteling.json.HotelReader.class);
         resources.add(com.mycompany.hoteling.json.HotelWriter.class);
+        resources.add(com.mycompany.hoteling.json.HotelesReader.class);
         resources.add(com.mycompany.hoteling.json.ReservaReader.class);
         resources.add(com.mycompany.hoteling.json.ReservaWriter.class);
         resources.add(com.mycompany.hoteling.json.TarjetaReader.class);
+        resources.add(com.mycompany.hoteling.json.UsuarioReader.class);
         resources.add(com.mycompany.hoteling.json.UsuarioWriter.class);
         resources.add(com.mycompany.hoteling.rest.GrupoUsuarioFacadeREST.class);
         resources.add(com.mycompany.hoteling.rest.HabitacionFacadeREST.class);

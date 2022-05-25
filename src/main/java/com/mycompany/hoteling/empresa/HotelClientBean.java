@@ -8,6 +8,7 @@ package com.mycompany.hoteling.empresa;
 import com.mycompany.hoteling.entities.Hotel;
 import com.mycompany.hoteling.json.HotelReader;
 import com.mycompany.hoteling.json.HotelWriter;
+import com.mycompany.hoteling.json.HotelesReader;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -61,9 +62,17 @@ public class HotelClientBean {
         target.register(HotelWriter.class)
                 .request()
                 .post(Entity.entity(h, MediaType.APPLICATION_JSON));
+        
+        bean.setCiudad("");
+        bean.setEmpresa("");
+        bean.setId(-1);
+        bean.setNombre("");
+        bean.setNumeroHab(0);
+        bean.setPrecio(0);
+        bean.setServicios("");
     }
 
-    public List<Hotel> getHotelesEmpresa(String email) {
+    public List<Hotel> getHotelesEmpresa(String email) {//rest preparado
         try {
             return em.createNamedQuery("Hotel.findByEmpresa",
                     Hotel.class)
@@ -73,6 +82,13 @@ public class HotelClientBean {
         } catch (NoResultException e) {
             return null;
         }
+        /*List<Hotel> h = (List<Hotel>) target.register(HotelesReader.class)
+                .path("byEmpresa/{email}")
+                .resolveTemplate("email", email)
+                .request(MediaType.APPLICATION_JSON)
+                .get(Hotel.class);
+        
+        return h;*/
     }
 
     public void deleteHotel() {

@@ -7,6 +7,7 @@ package com.mycompany.hoteling.cliente;
 
 import com.mycompany.hoteling.entities.Usuario;
 import com.mycompany.hoteling.jaas.EmailValidator;
+import com.mycompany.hoteling.json.UsuarioReader;
 import com.mycompany.hoteling.json.UsuarioWriter;
 import java.math.BigInteger;
 import java.text.ParseException;
@@ -68,8 +69,8 @@ public class PerfilClientBean {
         client.close();
     }
 
-    public Usuario getUserByEmail(String email) {
-        try {
+    public Usuario getUserByEmail(String email) {//rest, falta fecha nac
+        /*try {
             return em.createNamedQuery("Usuario.findByEmail",
                     Usuario.class)
                     .setParameter("email", email)
@@ -77,7 +78,14 @@ public class PerfilClientBean {
 
         } catch (NoResultException | NullPointerException e) {
             return null;
-        }
+        }*/
+        return target.path("email")
+                .register(UsuarioReader.class)
+                .path("{email}")
+                .resolveTemplate("email", email)
+                .request(MediaType.APPLICATION_JSON)
+                .get(Usuario.class);
+
     }
 
     public void deleteUser(String email) {
@@ -105,7 +113,7 @@ public class PerfilClientBean {
             bean.setCapitalSocial(u.getCapitalSocial());
             bean.setDomicilio(u.getDomicilio());
             bean.setOtros(u.getOtros());
-            bean.setVerificado(u.getVerificado()==null?0:u.getVerificado());
+            bean.setVerificado(u.getVerificado() == null ? 0 : u.getVerificado());
 
             return u.getNombre();
 
@@ -115,7 +123,7 @@ public class PerfilClientBean {
     }
 
     public String modificaUser(String email) {
-        Usuario h = new Usuario(bean.getEmail(), bean.getNombre(), bean.getPassword(), bean.getDni(), bean.getTelefono(), bean.getFechaNacString(), bean.getCif()==null? "":bean.getCif() ,bean.getDomicilio()==null? "":bean.getDomicilio(), bean.getCapitalSocial()==null? BigInteger.ZERO:bean.getCapitalSocial(), bean.getOtros()==null? "":bean.getOtros(),  bean.getVerificado()==0? Short.parseShort("0"):Short.parseShort("1"));
+        Usuario h = new Usuario(bean.getEmail(), bean.getNombre(), bean.getPassword(), bean.getDni(), bean.getTelefono(), bean.getFechaNacString(), bean.getCif() == null ? "" : bean.getCif(), bean.getDomicilio() == null ? "" : bean.getDomicilio(), bean.getCapitalSocial() == null ? BigInteger.ZERO : bean.getCapitalSocial(), bean.getOtros() == null ? "" : bean.getOtros(), bean.getVerificado() == 0 ? Short.parseShort("0") : Short.parseShort("1"));
         target.path("{email}")
                 .register(UsuarioWriter.class)
                 .resolveTemplate("email", email)
@@ -132,7 +140,7 @@ public class PerfilClientBean {
                 .setParameter("email", email)
                 .executeUpdate();
         ut.commit();
-        
+
     }
 
     public String getNombreByEmail(String email) {
@@ -157,10 +165,11 @@ public class PerfilClientBean {
         UIInput uiInputEmail = (UIInput) components.findComponent("email");
         String email = uiInputEmail.getLocalValue() == null ? "" : uiInputEmail.getLocalValue().toString();
         UIInput uiInputFecha = (UIInput) components.findComponent("fecha");
-        Date fecha=null;
-        try{
+        Date fecha = null;
+        try {
             fecha = (Date) (uiInputFecha.getLocalValue() == null ? "" : uiInputFecha.getLocalValue());
-        }catch(ClassCastException ex){}
+        } catch (ClassCastException ex) {
+        }
         UIInput uiInputTelefono = (UIInput) components.findComponent("tlf");
         String telefono = uiInputTelefono.getLocalValue() == null ? "" : uiInputTelefono.getLocalValue().toString();
         UIInput uiInputDni = (UIInput) components.findComponent("dni");
@@ -195,7 +204,7 @@ public class PerfilClientBean {
             facesContext.renderResponse();
         }
 
-        if (!dniCorrecto(dni) && !getUserByEmail(email).getDni().equals(dni)) { //dni valido y distinto al original
+        if (!dniCorrecto(dni)) { //dni valido
             FacesMessage msg = new FacesMessage("El DNI introducido no es válido");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             facesContext.addMessage(uiInputDni.getClientId(), msg);

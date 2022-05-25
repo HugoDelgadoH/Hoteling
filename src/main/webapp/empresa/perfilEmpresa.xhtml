@@ -11,31 +11,46 @@
 
             <ui:define name="content">
                 <h:form>
-                    <h2><h:outputText value="Información de perfil #{perfilClientBean.getUsuarioForBack(loginView.authenticatedUser.email)}"/></h2>
-                    <p:panelGrid id="infoPerfil" columns="3">
-                        <h:outputText value="Nombre de Usuario: "/>
-                        <h:inputText id="nombre" value="#{perfilBackingBean.nombre}" required="false" disabled="#{utiles.disabled}"/>
-                        <p:commandButton value="Editar" actionListener="#{utiles.action}" update="nombre"/>
-                        <h:outputText value="Email: "/>
-                        <h:inputText id="email" value="#{perfilBackingBean.email}" required="false" disabled="#{utiles.disabled}"/>
-                        <p:commandButton value="Editar" actionListener="#{utiles.action}" update="email"/>
-                        <h:outputText value="CIF: "/>
-                        <h:inputText id="fecha" value="#{perfilBackingBean.cif}" required="false" disabled="#{utiles.disabled}"/>
-                        <p:commandButton value="Editar" actionListener="#{utiles.action}" update="fecha"/>
-                        <h:outputText value="Dirección: "/>
-                        <h:inputText id="dir" value="#{perfilBackingBean.domicilio}" required="false" disabled="#{utiles.disabled}"/>
-                        <p:commandButton value="Editar" actionListener="#{utiles.action}" update="dir"/>
-                        <h:outputText value="Capital Social: "/>
-                        <h:inputText id="tlf" value="#{perfilBackingBean.capitalSocial}" required="false" disabled="#{utiles.disabled}"/>
-                        <p:commandButton value="Editar" actionListener="#{utiles.action}" update="tlf"/>
-                        <h:outputText value="Otros: "/>
-                        <h:inputText id="dni" value="#{perfilBackingBean.otros}" required="false" disabled="#{utiles.disabled}"/>
-                        <p:commandButton value="Editar" actionListener="#{utiles.action}" update="dni"/>
-                        <h:outputText value="Verificado: "/>
-                        <h:inputText id="ver" value="#{perfilBackingBean.verificado}" required="false" disabled="#{utiles.disabled}"/>
-                        <p:commandButton value="Editar" actionListener="#{utiles.action}" update="ver"/>
-                    </p:panelGrid>
-                    <p:commandButton value="Aplicar Cambios" action="./index.xhtml" actionListener="#{perfilClientBean.modificaUser}"/>
+                    <p:panel header="Información de perfil #{perfilClientBean.getUsuarioForBack(loginView.authenticatedUser.email)}">
+                        <p:panelGrid id="infoPerfil" columns="3">
+                            <h:outputText value="Nombre de Usuario: "/>
+                            <p:inplace>
+                                <h:inputText id="nombre" value="#{perfilBackingBean.nombre}" required="false" disabled="#{utiles.disabled}"/>
+                            </p:inplace>
+                            <p:message for="nombre"/>
+                            <h:outputText value="Email: "/>
+                            <p:inplace>
+                                <h:inputText id="email" value="#{perfilBackingBean.email}" required="false" disabled="#{utiles.disabled}"/>
+                            </p:inplace>
+                            <p:message for="email"/>
+                            <h:outputText value="CIF: "/>
+                            <p:inplace>
+                                <h:inputText id="fecha" value="#{perfilBackingBean.cif}" required="false" disabled="#{utiles.disabled}"/>
+                            </p:inplace>
+                            <p:message for="fecha"/>
+                            <h:outputText value="Dirección: "/>
+                            <p:inplace>
+                                <h:inputText id="dir" value="#{perfilBackingBean.domicilio}" required="false" disabled="#{utiles.disabled}"/>
+                            </p:inplace>
+                            <p:message for="dir"/>
+                            <h:outputText value="Capital Social: "/>
+                            <p:inplace>
+                                <h:inputText id="tlf" value="#{perfilBackingBean.capitalSocial}" required="false" disabled="#{utiles.disabled}"/>
+                            </p:inplace>
+                            <p:message for="tlf"/>
+                            <h:outputText value="Otros: "/>
+                            <p:inplace>
+                                <h:inputText id="otros" value="#{perfilBackingBean.otros}" required="false" disabled="#{utiles.disabled}"/>
+                            </p:inplace>
+                            <p:message for="otros"/>
+                            <h:outputText value="Verificado: "/>
+                            <p:inplace>
+                                <h:inputText id="ver" value="#{perfilBackingBean.verificado}" required="false" disabled="#{utiles.disabled}"/>
+                            </p:inplace>
+                            <p:message for="ver"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Aplicar Cambios" action="./index.xhtml" actionListener="#{perfilClientBean.modificaUser}"/>
+                    </p:panel>
                     <br/><br/>
                     <p:commandButton value="Borrar Cuenta" action="#{loginView.logout()}" actionListener="#{perfilClientBean.borrarUser(loginView.authenticatedUser.email)}">
                         <p:confirm header="Confirmar" message="¿Eliminar cuenta?" icon="pi pi-exclamation-triangle"/>
