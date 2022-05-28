@@ -6,10 +6,12 @@
 package com.mycompany.hoteling.empresa;
 
 import com.mycompany.hoteling.entities.Hotel;
+import com.mycompany.hoteling.general.FotosHoteles;
 import com.mycompany.hoteling.json.HotelReader;
 import com.mycompany.hoteling.json.HotelWriter;
 import com.mycompany.hoteling.json.HotelesReader;
 import java.util.List;
+import java.util.Random;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
@@ -22,6 +24,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -62,7 +65,7 @@ public class HotelClientBean {
         target.register(HotelWriter.class)
                 .request()
                 .post(Entity.entity(h, MediaType.APPLICATION_JSON));
-        
+
         bean.setCiudad("");
         bean.setEmpresa("");
         bean.setId(-1);
@@ -72,8 +75,8 @@ public class HotelClientBean {
         bean.setServicios("");
     }
 
-    public List<Hotel> getHotelesEmpresa(String email) {//rest preparado
-        try {
+    public List<Hotel> getHotelesEmpresa(String email) {
+        /*try {
             return em.createNamedQuery("Hotel.findByEmpresa",
                     Hotel.class)
                     .setParameter("empresa", email)
@@ -81,14 +84,16 @@ public class HotelClientBean {
 
         } catch (NoResultException e) {
             return null;
-        }
-        /*List<Hotel> h = (List<Hotel>) target.register(HotelesReader.class)
+        }*/
+        List<Hotel> h = target
+                .register(HotelesReader.class)
                 .path("byEmpresa/{email}")
                 .resolveTemplate("email", email)
                 .request(MediaType.APPLICATION_JSON)
-                .get(Hotel.class);
-        
-        return h;*/
+                .get(new GenericType<List<Hotel>>() {
+                });
+
+        return h;
     }
 
     public void deleteHotel() {
@@ -105,14 +110,14 @@ public class HotelClientBean {
                 .resolveTemplate("hotelId", bean.getId())
                 .request(MediaType.APPLICATION_JSON)
                 .get(Hotel.class);
-        
+
         bean.setEmpresa(h.getEmpresa());
         bean.setCiudad(h.getCiudad());
         bean.setNombre(h.getNombre());
         bean.setNumeroHab(h.getNumeroHab());
         bean.setServicios(h.getServicios());
         bean.setId(h.getId());
-        
+
         return h;
     }
 
@@ -128,6 +133,14 @@ public class HotelClientBean {
     }
 
     public int getRating() {
-        return 4;
+        Random rand = new Random();
+
+        return rand.nextInt(5) + 1;//random entre 1 y  5 incluidos
+    }
+
+    public String getRandFoto() {
+        FotosHoteles f = new FotosHoteles();
+
+        return f.getRandomFoto();
     }
 }

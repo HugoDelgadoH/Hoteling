@@ -9,6 +9,7 @@ import com.mycompany.hoteling.entities.Hotel;
 import com.mycompany.hoteling.rest.HotelFacadeREST;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Random;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
@@ -27,13 +28,11 @@ import org.primefaces.PrimeFaces;
 public class DataGridView implements Serializable {
 
     private Hotel selectedHotel;
-    private int rating;
 
     @PersistenceContext
     EntityManager em;
 
     public DataGridView() {
-        this.rating = 4;
     }
 
     @PostConstruct
@@ -65,11 +64,6 @@ public class DataGridView implements Serializable {
             return "login";
         }
         return "reserva";
-    }
-
-    public int getRating() {
-        return rating;
-    }
-    
+    } 
     
 }

@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author gohug
  */
-@Entity(name = "Usuario")
+@Entity
 @Table(name = "usuario")
 @XmlRootElement
 @NamedQueries({
@@ -40,8 +40,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuario.findByDomicilio", query = "SELECT u FROM Usuario u WHERE u.domicilio = :domicilio"),
     @NamedQuery(name = "Usuario.findByCapitalSocial", query = "SELECT u FROM Usuario u WHERE u.capitalSocial = :capitalSocial"),
     @NamedQuery(name = "Usuario.findByOtros", query = "SELECT u FROM Usuario u WHERE u.otros = :otros"),
-    @NamedQuery(name = "Usuario.findByVerificado", query = "SELECT u FROM Usuario u WHERE u.verificado = :verificado"),
-    @NamedQuery(name = "Usuario.delete", query = "DELETE FROM Usuario u WHERE u.email = :email")})
+    @NamedQuery(name = "Usuario.findByVerificado", query = "SELECT u FROM Usuario u, GrupoUsuario g WHERE u.verificado = :verificado AND g.email=u.email AND g.nombre='empresa'"),
+    @NamedQuery(name = "Usuario.delete", query = "DELETE FROM Usuario u WHERE u.email = :email"),
+    @NamedQuery(name = "Usuario.validar", query = "UPDATE Usuario u SET u.verificado = 1 WHERE u.email = :email")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;

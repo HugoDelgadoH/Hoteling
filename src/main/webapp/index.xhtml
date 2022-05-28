@@ -28,8 +28,8 @@
                                         <span class="product-badge">#{perfilClientBean.getNombreByEmail(product.empresa)}</span>
                                     </div>
                                     <div class="product-grid-item-content">
-                                        <p:graphicImage url="https://cdn.pixabay.com/photo/2021/08/25/20/42/field-6574455__480.jpg" library="demo" height="200" width="250"/>
-                                        <div class="product-name">#{product.nombre}</div>
+                                        <p:graphicImage url="#{hotelClientBean.randFoto}" library="demo" height="200" width="250"/>
+                                        <div class="product-name"><p:link value="#{product.nombre}"/></div>
                                         <div class="product-description">#{product.servicios}</div>
                                         <p:rating readonly="true" value="#{hotelClientBean.rating}"/>
                                     </div>
@@ -41,9 +41,9 @@
                             
                             <p:dataViewListItem>
                                 <div class="product-list-item">
-                                    <p:graphicImage url="https://cdn.pixabay.com/photo/2021/08/25/20/42/field-6574455__480.jpg" library="demo" height="200" width="250"/>
+                                    <p:graphicImage url="#{hotelClientBean.randFoto}" library="demo" height="200" width="250"/>
                                     <div class="product-list-detail">
-                                        <div class="product-name">#{product.nombre}</div>
+                                        <div class="product-name"><p:link value="#{product.nombre}"/></div>
                                         <div class="product-description">#{product.servicios}</div>
                                         <p:rating readonly="true" value="#{hotelClientBean.rating}"/>
                                         <i class="pi pi-map-marker"/><span

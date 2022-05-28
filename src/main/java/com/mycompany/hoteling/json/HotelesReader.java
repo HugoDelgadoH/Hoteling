@@ -19,6 +19,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.Provider;
+import org.primefaces.shaded.json.JSONArray;
+import org.primefaces.shaded.json.JSONObject;
 
 /**
  *
@@ -37,7 +39,7 @@ public class HotelesReader implements MessageBodyReader<List<Hotel>> {
     public List<Hotel> readFrom(Class<List<Hotel>> type, Type type1, Annotation[] antns, MediaType mt, MultivaluedMap<String, String> mm, InputStream in) throws IOException, WebApplicationException {
         List<Hotel> hoteles = null;
         Hotel h = new Hotel();
-        JsonParser parser = Json.createParser(in);
+        /*JsonParser parser = Json.createParser(in);
         while (parser.hasNext()) {
             switch (parser.next()) {
                 case START_ARRAY:
@@ -75,6 +77,21 @@ public class HotelesReader implements MessageBodyReader<List<Hotel>> {
                     }
             }
         }
+        return hoteles;*/
+        JSONArray jsonarray = new JSONArray(in);
+        for (int i = 0; i < jsonarray.length(); i++) {
+            JSONObject jsonobject = jsonarray.getJSONObject(i);
+            h.setEmpresa(jsonobject.getString("empresa"));
+            h.setId(jsonobject.getInt("id"));
+            h.setNombre(jsonobject.getString("nombre"));
+            h.setCiudad(jsonobject.getString("ciudad"));
+            h.setNumeroHab(jsonobject.getInt("numero_hab"));
+            h.setServicios(jsonobject.getString("servicios"));
+           
+            
+            hoteles.add(h);
+        }
+        
         return hoteles;
     }
 
