@@ -16,7 +16,7 @@ var chatlog = document.getElementById("chatlog");
 var output = document.getElementById("output");
 var username;
 
-function join() {
+function join(user) {
     username = textField.value;
     websocket.send(username + " joined");
     document.getElementById("unirse").style.setProperty("visibility", "hidden");

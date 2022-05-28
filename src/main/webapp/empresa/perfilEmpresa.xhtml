@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -11,45 +12,44 @@
 
             <ui:define name="content">
                 <h:form>
+                    <f:event listener="#{perfilClientBean.validaPerfilEmpresa}" type="postValidate" />
                     <p:panel header="Información de perfil #{perfilClientBean.getUsuarioForBack(loginView.authenticatedUser.email)}">
                         <p:panelGrid id="infoPerfil" columns="3">
                             <h:outputText value="Nombre de Usuario: "/>
                             <p:inplace>
-                                <h:inputText id="nombre" value="#{perfilBackingBean.nombre}" required="false" disabled="#{utiles.disabled}"/>
+                                <h:inputText id="nombre" value="#{perfilBackingBean.nombre}" required="true"/>
                             </p:inplace>
                             <p:message for="nombre"/>
                             <h:outputText value="Email: "/>
                             <p:inplace>
-                                <h:inputText id="email" value="#{perfilBackingBean.email}" required="false" disabled="#{utiles.disabled}"/>
+                                <h:inputText id="email" value="#{perfilBackingBean.email}" required="true"/>
                             </p:inplace>
                             <p:message for="email"/>
                             <h:outputText value="CIF: "/>
                             <p:inplace>
-                                <h:inputText id="fecha" value="#{perfilBackingBean.cif}" required="false" disabled="#{utiles.disabled}"/>
+                                <h:inputText id="fecha" value="#{perfilBackingBean.cif}" required="true"/>
                             </p:inplace>
                             <p:message for="fecha"/>
                             <h:outputText value="Dirección: "/>
                             <p:inplace>
-                                <h:inputText id="dir" value="#{perfilBackingBean.domicilio}" required="false" disabled="#{utiles.disabled}"/>
+                                <h:inputText id="dir" value="#{perfilBackingBean.domicilio}" required="true"/>
                             </p:inplace>
                             <p:message for="dir"/>
                             <h:outputText value="Capital Social: "/>
                             <p:inplace>
-                                <h:inputText id="tlf" value="#{perfilBackingBean.capitalSocial}" required="false" disabled="#{utiles.disabled}"/>
+                                <h:inputText id="tlf" value="#{perfilBackingBean.capitalSocial}" required="true"/>
                             </p:inplace>
                             <p:message for="tlf"/>
                             <h:outputText value="Otros: "/>
                             <p:inplace>
-                                <h:inputText id="otros" value="#{perfilBackingBean.otros}" required="false" disabled="#{utiles.disabled}"/>
+                                <h:inputText id="otros" value="#{perfilBackingBean.otros}" required="false"/>
                             </p:inplace>
                             <p:message for="otros"/>
                             <h:outputText value="Verificado: "/>
-                            <p:inplace>
-                                <h:inputText id="ver" value="#{perfilBackingBean.verificado}" required="false" disabled="#{utiles.disabled}"/>
-                            </p:inplace>
+                            <h:outputText id="ver" value="#{perfilBackingBean.verificado}"/>
                             <p:message for="ver"/>
                         </p:panelGrid>
-                        <p:commandButton value="Aplicar Cambios" action="./index.xhtml" actionListener="#{perfilClientBean.modificaUser}"/>
+                        <p:commandButton update="infoPerfil" value="Aplicar Cambios" action="#{perfilClientBean.modificaUser(loginView.authenticatedUser.email)}"/>
                     </p:panel>
                     <br/><br/>
                     <p:commandButton value="Borrar Cuenta" action="#{loginView.logout()}" actionListener="#{perfilClientBean.borrarUser(loginView.authenticatedUser.email)}">

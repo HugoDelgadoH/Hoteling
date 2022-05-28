@@ -73,7 +73,7 @@
                             <p:menuitem value="Chat" outcome="/chat/chatroom.xhtml"/>
                         </p:submenu>
                         <p:submenu label ="EMPRESA" rendered="#{request.isUserInRole('empresa')}">
-                            <p:menuitem value="Añadir" action="/empresa/addHotel.xhtml" icon="ui-icon-plusthick" disabled="#{loginView.authenticatedUser.verificado==0?true:false}"/>
+                            <p:menuitem value="Añadir" action="#{hotelClientBean.limpiaValores}" icon="ui-icon-plusthick" disabled="#{loginView.authenticatedUser.verificado==0?true:false}"/>
                             <p:menuitem value="Ver Hoteles" action="/empresa/verHoteles.xhtml" icon="ui-icon-search" disabled="#{loginView.authenticatedUser.verificado==0?true:false}"/>
                         </p:submenu>
                         <p:submenu label ="ADMINISTRADOR" rendered="#{request.isUserInRole('admin')}">

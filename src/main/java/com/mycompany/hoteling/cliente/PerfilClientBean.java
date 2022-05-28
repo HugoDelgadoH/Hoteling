@@ -123,7 +123,13 @@ public class PerfilClientBean {
     }
 
     public String modificaUser(String email) {
-        Usuario h = new Usuario(bean.getEmail(), bean.getNombre(), bean.getPassword(), bean.getDni(), bean.getTelefono(), bean.getFechaNacString(), bean.getCif() == null ? "" : bean.getCif(), bean.getDomicilio() == null ? "" : bean.getDomicilio(), bean.getCapitalSocial() == null ? BigInteger.ZERO : bean.getCapitalSocial(), bean.getOtros() == null ? "" : bean.getOtros(), bean.getVerificado() == 0 ? Short.parseShort("0") : Short.parseShort("1"));
+        String f;
+        try{
+            f= bean.getFechaNacString();
+        }catch(NullPointerException e){
+            f="-";
+        }
+        Usuario h = new Usuario(bean.getEmail(), bean.getNombre(), bean.getPassword(), bean.getDni() == null ? "": bean.getDni(), bean.getTelefono() ==null ? "":bean.getTelefono(), f, bean.getCif() == null ? "" : bean.getCif(), bean.getDomicilio() == null ? "" : bean.getDomicilio(), bean.getCapitalSocial() == null ? BigInteger.ZERO : bean.getCapitalSocial(), bean.getOtros() == null ? "" : bean.getOtros(), bean.getVerificado() == 0 ? Short.parseShort("0") : Short.parseShort("1"));
         target.path("{email}")
                 .register(UsuarioWriter.class)
                 .resolveTemplate("email", email)
@@ -215,6 +221,54 @@ public class PerfilClientBean {
             FacesMessage msg = new FacesMessage("Debe ser mayor de edad");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             facesContext.addMessage(uiInputFecha.getClientId(), msg);
+            facesContext.renderResponse();
+        }
+
+    }
+
+    public void validaPerfilEmpresa(ComponentSystemEvent event) {
+        EmailValidator e = new EmailValidator();
+
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        UIComponent components = event.getComponent();
+        UIInput uiInputNombre = (UIInput) components.findComponent("nombre");
+        String nombre = uiInputNombre.getLocalValue() == null ? "" : uiInputNombre.getLocalValue().toString();
+        UIInput uiInputEmail = (UIInput) components.findComponent("email");
+        String email = uiInputEmail.getLocalValue() == null ? "" : uiInputEmail.getLocalValue().toString();
+        UIInput uiInputCif = (UIInput) components.findComponent("fecha");
+        String cif = uiInputCif.getLocalValue() == null ? "" : uiInputCif.getLocalValue().toString();
+        UIInput uiInputDireccion = (UIInput) components.findComponent("dir");
+        String direccion = uiInputDireccion.getLocalValue() == null ? "" : uiInputDireccion.getLocalValue().toString();
+        UIInput uiInputCap = (UIInput) components.findComponent("tlf");
+        String cap = uiInputCap.getLocalValue() == null ? "" : uiInputCap.getLocalValue().toString();
+        double capSocial = Double.parseDouble(cap);
+
+        if (nombre.length() <= 4) {//Nombre
+            FacesMessage msg = new FacesMessage("El nombre debe contener más de cuatro caracteres");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            facesContext.addMessage(uiInputNombre.getClientId(), msg);
+            facesContext.renderResponse();
+        }
+
+        if (getNombreByEmail(email) != null && getNombreByEmail(email).equals(bean.getEmail())) {//email repetido y distinto al del propio usuario
+            FacesMessage msg = new FacesMessage("El email introducido ya existe");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            facesContext.addMessage(uiInputEmail.getClientId(), msg);
+            facesContext.renderResponse();
+        }
+        try {//email valido
+            e.validate(facesContext, uiInputEmail, email);
+        } catch (ValidatorException ex) {
+            FacesMessage msg = new FacesMessage("El email introducido no es válido");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            facesContext.addMessage(uiInputEmail.getClientId(), msg);
+            facesContext.renderResponse();
+        }
+
+        if (cif.length() != 9 || !isNumeric(cif.substring(1, 9))) {
+            FacesMessage msg = new FacesMessage("El CIF no es válido");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            facesContext.addMessage(uiInputCif.getClientId(), msg);
             facesContext.renderResponse();
         }
 

@@ -15,6 +15,11 @@ import java.util.Random;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -142,5 +147,90 @@ public class HotelClientBean {
         FotosHoteles f = new FotosHoteles();
 
         return f.getRandomFoto();
+    }
+
+    public String limpiaValores() {
+        bean.setNombre("");
+        bean.setCiudad("");
+        bean.setNumeroHab(0);
+        bean.setServicios("");
+
+        return "/empresa/addHotel.xhtml";
+    }
+
+    public void validaHotel(ComponentSystemEvent event) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        UIComponent components = event.getComponent();
+        UIInput uiInputNombre = (UIInput) components.findComponent("nombre");
+        String nombre = uiInputNombre.getLocalValue() == null ? "" : uiInputNombre.getLocalValue().toString();
+        UIInput uiInputCiudad = (UIInput) components.findComponent("ciudad");
+        String ciudad = uiInputCiudad.getLocalValue() == null ? "" : uiInputCiudad.getLocalValue().toString();
+        UIInput uiInputNumHab = (UIInput) components.findComponent("hab");
+        String numHab = uiInputNumHab.getLocalValue() == null ? "" : uiInputNumHab.getLocalValue().toString();
+        int numeroHab = Integer.parseInt(numHab);
+        UIInput uiInputPrecio = (UIInput) components.findComponent("precio");
+        String prec = uiInputPrecio.getLocalValue() == null ? "" : uiInputPrecio.getLocalValue().toString();
+        double precio = Double.parseDouble(prec);
+
+        if (nombre.length() < 4) {
+            FacesMessage msg = new FacesMessage("El nombre debe contener más de cuatro caracteres");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            facesContext.addMessage(uiInputNombre.getClientId(), msg);
+            facesContext.renderResponse();
+        }
+
+        if (ciudad.length() < 4) {
+            FacesMessage msg = new FacesMessage("Introduce una ciudad válida");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            facesContext.addMessage(uiInputCiudad.getClientId(), msg);
+            facesContext.renderResponse();
+        }
+
+        if (numeroHab < 5) {
+            FacesMessage msg = new FacesMessage("El número de haitaciones debe ser al menos 5");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            facesContext.addMessage(uiInputNumHab.getClientId(), msg);
+            facesContext.renderResponse();
+        }
+
+        if (precio <= 0) {
+            FacesMessage msg = new FacesMessage("El precio debe ser mayor que 0");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            facesContext.addMessage(uiInputPrecio.getClientId(), msg);
+            facesContext.renderResponse();
+        }
+    }          
+
+    public void validaHotelEdit(ComponentSystemEvent event) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        UIComponent components = event.getComponent();
+        UIInput uiInputNombre = (UIInput) components.findComponent("nom");
+        String nombre = uiInputNombre.getLocalValue() == null ? "" : uiInputNombre.getLocalValue().toString();
+        UIInput uiInputCiudad = (UIInput) components.findComponent("ciu");
+        String ciudad = uiInputCiudad.getLocalValue() == null ? "" : uiInputCiudad.getLocalValue().toString();
+        UIInput uiInputNumHab = (UIInput) components.findComponent("num");
+        String numHab = uiInputNumHab.getLocalValue() == null ? "" : uiInputNumHab.getLocalValue().toString();
+        int numeroHab = Integer.parseInt(numHab);
+
+        if (nombre.length() < 4) {
+            FacesMessage msg = new FacesMessage("El nombre debe contener más de cuatro caracteres");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            facesContext.addMessage(uiInputNombre.getClientId(), msg);
+            facesContext.renderResponse();
+        }
+
+        if (ciudad.length() < 4) {
+            FacesMessage msg = new FacesMessage("Introduce una ciudad válida");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            facesContext.addMessage(uiInputCiudad.getClientId(), msg);
+            facesContext.renderResponse();
+        }
+
+        if (numeroHab < 5) {
+            FacesMessage msg = new FacesMessage("El número de haitaciones debe ser al menos 5");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            facesContext.addMessage(uiInputNumHab.getClientId(), msg);
+            facesContext.renderResponse();
+        }
     }
 }

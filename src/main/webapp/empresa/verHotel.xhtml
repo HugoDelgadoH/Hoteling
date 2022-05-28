@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -11,6 +12,7 @@
 
             <ui:define name="content">
                 <h:form>
+                    <f:event listener="#{hotelClientBean.validaHotelEdit}" type="postValidate" />
                     <p:panel id="panel" header="Información de #{hotelClientBean.hotel.nombre}" styleClass="p-mb-3">
                         <p:panelGrid id="info" columns="3">
                             <p:outputLabel value="Nombre: "/>
@@ -37,7 +39,7 @@
                             </p:inplace>
                             <p:message for="ser"/>
                         </p:panelGrid>
-                        <p:commandButton value="Aplicar Cambios" action="#{hotelClientBean.editHotel()}" icon="pi pi-pencil"/>
+                        <p:commandButton update="info" value="Aplicar Cambios" action="#{hotelClientBean.editHotel()}" icon="pi pi-pencil"/>
                     </p:panel>
                     <p:commandButton value="Back" action="verHoteles" icon="ui-icon-arrowrefresh-1-w"/>
                     <p:commandButton value="Eliminar" action="verHoteles" actionListener="#{hotelClientBean.deleteHotel()}"/>

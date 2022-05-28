@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -12,20 +13,27 @@
             <ui:define name="content">
                 <div class="card">
                     <h:form>
+                        <f:event listener="#{hotelClientBean.validaHotel}" type="postValidate" />
                         <p:panel id="panel" header="Añadir Hotel" styleClass="p-mb-3">
-                            <h:panelGrid columns="4" cellpadding="10">
-                                <p:outputLabel for="nombre" value="Nombre: "/>
-                                <p:inputText value="#{hotelBackingBean.nombre}" id="nombre"/>
-                                <p:outputLabel for="ciudad" value="Ciudad: "/>
-                                <p:inputText value="#{hotelBackingBean.ciudad}" id="ciudad"/>
-                                <p:outputLabel for="hab" value="Número de habitaciones: "/>
-                                <p:inputNumber value="#{hotelBackingBean.numeroHab}" id="hab"/>
-                                <p:outputLabel for="precio" value="Precio: "/>
-                                <p:inputNumber value="#{hotelBackingBean.precio}" id="precio" symbol=" €" symbolPosition="s" decimalSeparator="." thousandSeparator="" />                         
+                            <h:panelGrid columns="3" cellpadding="10">
+                                <p:outputLabel value="Nombre: "/>
+                                <p:inputText value="#{hotelBackingBean.nombre}" id="nombre" required="true"/>
+                                <p:message for="nombre"/>
+                                <p:outputLabel value="Ciudad: "/>
+                                <p:inputText value="#{hotelBackingBean.ciudad}" id="ciudad" required="true"/>
+                                <p:message for="ciudad"/>
+                                <p:outputLabel value="Número de habitaciones: "/>
+                                <p:inputNumber value="#{hotelBackingBean.numeroHab}" id="hab" required="true"/>
+                                <p:message for="hab"/>
+                                <p:outputLabel value="Precio: "/>
+                                <p:inputNumber value="#{hotelBackingBean.precio}" id="precio" symbol=" €" symbolPosition="s" decimalSeparator="." thousandSeparator="" required="true"/>
+                                <p:message for="precio"/>
                                 <p:outputLabel for="servicios" value="Servicios: "/>
-                                <p:inputText value="#{hotelBackingBean.servicios}" id="servicios"/>                                
+                                <p:inputText value="#{hotelBackingBean.servicios}" id="servicios"/>      
+                                <p:message for="servicios"/>
                             </h:panelGrid>
                             <p:commandButton
+                                update="panel"
                                 value="Registrar"
                                 action="index"
                                 actionListener="#{hotelClientBean.addHotel(loginView.authenticatedUser.email)}"/>

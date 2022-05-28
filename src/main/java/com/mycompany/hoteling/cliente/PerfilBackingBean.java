@@ -131,7 +131,7 @@ public class PerfilBackingBean implements Serializable {
     }
 
     public void setFechaNacString(String f) throws ParseException {
-        if (f != null) {
+        if (f != null && !f .equals("-")) {
             this.fechaNac = new SimpleDateFormat("dd/MM/yyyy").parse(f);
         } else {
             this.fechaNac = null;
